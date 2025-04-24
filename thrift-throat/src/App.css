@@ -1,3 +1,9 @@
+/* PWEDE TAYO MAGLAGAY DITO NG CONSTANT DESIGNS */
+:root{
+  /* parang trip ko to na bg color sa website pero di muna ginagamit */
+  --bg-color: rgb(251, 242, 238);
+}
+
 * {
     box-sizing: border-box;
     margin:0;
@@ -95,6 +101,37 @@ a{
 
 .activeNav {
   color:rgb(135, 184, 184);
+}
+
+
+/* FOOTER */
+footer {
+  box-shadow: 1px 1px 3px rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 10%;
+  margin-top: 2rem;
+}
+
+.footer-social {
+  font-size: 24px;
+}
+
+.bottom-title {
+  display: flex;
+  justify-content: center;
+  color: #000;
+  font-weight: bolder;
+  margin-bottom: 2rem;
+}
+
+.footer-column {
+  display: flex;
+  justify-content: center;
+  gap: 5em;
+  margin-bottom: 2rem;
 }
 
 /* LANDING PAGE */
@@ -306,35 +343,6 @@ a{
   cursor: pointer;
 }
 
-/* Footer styles - keeping them for reference */
-footer {
-  box-shadow: 1px 1px 3px rgb(0, 0, 0);
-  background-color: rgb(255, 255, 255);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 30px 10%;
-  margin-top: 2rem;
-}
-
-.footer-social {
-  font-size: 24px;
-}
-
-.bottom-title {
-  display: flex;
-  justify-content: center;
-  color: #000;
-  font-weight: 200;
-  margin-bottom: 2rem;
-}
-
-.footer-column {
-  display: flex;
-  justify-content: center;
-  gap: 5em;
-  margin-bottom: 2rem;
-}
 /* PRODUCTS PAGE */
 .paginationContainer{
   display: flex;
@@ -409,4 +417,65 @@ footer {
 .pagination button.active {
   background: #0066cc;
   color: white;
+}
+
+.lContent{
+
+  display: flex;
+  flex-direction: column;
+  padding: 50px 250px;
+}
+
+.lContent > h1{
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+
+.FAQtitle{
+  color: #000;
+  letter-spacing: 3px;
+}
+
+
+.QUESTION{
+  color: #000;
+  background-color: white;
+  cursor: pointer;
+  font-size: 1.2rem;
+  width: 100%;
+  padding: 2rem 2.5rem;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.QUESTION i{
+  font-size: 1.4rem;
+}
+
+.active, .QUESTION:hover{
+  background-color: #d1d1d1;;
+}
+
+
+.pannel{
+  padding: 0 2rem 2.5rem 2rem;
+  background-color: white;
+  overflow: hidden;
+  background-color: #d1d1d1;
+  display:none;
+}
+.pannel p{
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+
+.perFAQ {
+  border: 1px solid, rgba(0, 0, 0, 0.2);
+  margin: 10px 0;
 }

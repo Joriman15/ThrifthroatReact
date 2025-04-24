@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState(null);
 
   useEffect(() => {
     // Simulate an API call or data fetching

@@ -3,6 +3,7 @@ function Footer() {
     <>
       <footer>
         <div className="footer-container">
+          <h2 className="bottom-title">Thrifthroat</h2>
           <div className="footer-column">
             <a href="#" className="footer-social">
               <i className="fa fa-facebook-square"></i>

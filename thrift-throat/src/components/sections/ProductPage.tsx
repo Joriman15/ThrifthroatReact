@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 function ProductPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const productsPerPage = 6; // Number of products per page
+  const productsPerPage = 8; // Number of products per page
 
   const products = [
     {
