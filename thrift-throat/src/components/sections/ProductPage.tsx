@@ -146,7 +146,7 @@ function ProductPage() {
 
       <section className="mainContentProductPage">
         <div className="productRow">
-          {/* <!-- Each product row contains info of 4 elements --> */}
+          {/* Each product row contains info of 4 elements (on pc)*/}
           {currentProducts.map((product) => (
             <div key={product.id} className="productInfoContainer">
               <div className="productImageContainer">
@@ -169,69 +169,6 @@ function ProductPage() {
       {renderPagination()}
     </>
   );
-
-  //         <div className="productRow">
-  //           {/* <!-- Each product row contains info of 4 elements --> */}
-  //           <article className="productInfoContainer">
-  //             {/* <!-- Each individual product description --> */}
-  //             <div className="productImageContainer">
-  //               <img
-  //                 className="productImage"
-  //                 alt="sample"
-  //                 src="../src/assets/images/jacket4.jpg"
-  //               />
-  //             </div>
-  //             <div className="productInfo">
-  //               <p className="price">PHP 600</p>
-  //               <p className="productContent">Champion 20x25.5</p>
-  //             </div>
-  //           </article>
-  //           <article className="productInfoContainer">
-  //             {/* <!-- Each individual product description --> */}
-  //             <div className="productImageContainer">
-  //               <img
-  //                 className="productImage"
-  //                 alt="sample"
-  //                 src="../src/assets/images/jack1.jpg"
-  //               />
-  //             </div>
-  //             <div className="productInfo">
-  //               <p className="price">PHP 1000</p>
-  //               <p className="productContent">Nike 26x29</p>
-  //             </div>
-  //           </article>
-  //           <article className="productInfoContainer">
-  //             {/* <!-- Each individual product description --> */}
-  //             <div className="productImageContainer">
-  //               <img
-  //                 className="productImage"
-  //                 alt="sample"
-  //                 src="../src/assets/images/jack3.jpg"
-  //               />
-  //             </div>
-  //             <div className="productInfo">
-  //               <p className="price">PHP 600</p>
-  //               <p className="productContent">Bapesta 25x30</p>
-  //             </div>
-  //           </article>
-  //           <article className="productInfoContainer">
-  //             {/* <!-- Each individual product description --> */}
-  //             <div className="productImageContainer">
-  //               <img
-  //                 className="productImage"
-  //                 alt="sample"
-  //                 src="../src/assets/images/ll1.jpg"
-  //               />
-  //             </div>
-  //             <div className="productInfo">
-  //               <p className="price">PHP600</p>
-  //               <p className="productContent">The Mountain 25x34</p>
-  //             </div>
-  //           </article>
-  //         </div>
-  //       </section>
-  //     </>
-  //   );
 }
 
 export default ProductPage;

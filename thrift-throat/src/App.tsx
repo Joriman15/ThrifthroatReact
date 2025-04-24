@@ -11,22 +11,16 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate an API call or data fetching
     setTimeout(() => {
       setLoading(false);
     }, 2000);
   }, []);
 
-  if (loading) {
-    return (
-      <>
-        <div className="loading-container">
-          <span className="loading"></span>
-          <p>Loading NG INA MO...</p>
-        </div>
-      </>
-    );
-  }
+  useEffect(() => {
+    const body = document.body;
+    if (!loading) body.classList.add("app-ready");
+    else body.classList.remove("app-ready");
+  }, [loading]);
 
   return (
     <BrowserRouter>
@@ -40,6 +34,14 @@ function App() {
         </Routes>
       </div>
       <Footer />
+      {loading && (
+        <>
+          <div className="loading-container">
+            <span className="loading"></span>
+            <p>Loading NG INA MO...</p>
+          </div>
+        </>
+      )}
     </BrowserRouter>
   );
 }
