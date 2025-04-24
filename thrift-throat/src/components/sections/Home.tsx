@@ -1,6 +1,60 @@
 // THIS IS FOR THE LANDING PAGE OR HOME PAGE
 
+import { useState } from "react";
+
 function Home() {
+  // State for managing modal visibility and content
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    currentImage: "",
+    currentCaption: "",
+  });
+
+  // Function to open modal
+  const openModal = (src: any, alt: any) => {
+    setModalState({
+      isOpen: true,
+      currentImage: src,
+      currentCaption: alt,
+    });
+  };
+
+  // Function to close modal
+  const closeModal = () => {
+    setModalState({
+      ...modalState,
+      isOpen: false,
+    });
+  };
+
+  // Array of gallery images
+  const galleryImages = [
+    {
+      id: 1,
+      src: "../src/assets/images/caps.jpg",
+      alt: "A unique mix of vintage hats for every mood and moment.",
+    },
+    {
+      id: 2,
+      src: "../src/assets/images/pants.jpg",
+      alt: "Vintage pants in all styles, fits, and vibes — find your perfect pair.",
+    },
+    {
+      id: 3,
+      src: "../src/assets/images/shirts.jpg",
+      alt: "A mix of vintage tops with personality, pattern, and plenty of charm.",
+    },
+    {
+      id: 4,
+      src: "../src/assets/images/shirts2.jpg",
+      alt: "From bold prints to classic cuts — vintage shirts for every statement.",
+    },
+    {
+      id: 5,
+      src: "../src/assets/images/poloshirt.jpg",
+      alt: "Each shirt has a past. Ready to be part of yours.",
+    },
+  ];
   return (
     <>
       <div className="main-section">
@@ -31,6 +85,35 @@ function Home() {
           each piece is a find waiting to be found.
         </h4>
       </section>
+
+      <div className="gallery">
+        <div className="sub-gallery">
+          {galleryImages.map((image) => (
+            <img
+              id={`myImg${image.id}`}
+              key={image.id}
+              src={image.src}
+              alt={image.alt}
+              onClick={() => openModal(image.src, image.alt)}
+            />
+          ))}
+        </div>
+
+        {/* Modal */}
+        {modalState.isOpen && (
+          <div id="myModal" className="modal">
+            <span className="close" onClick={closeModal}>
+              &times;
+            </span>
+            <img
+              className="modal-content"
+              src={modalState.currentImage}
+              alt="gallery item"
+            />
+            <div id="caption">{modalState.currentCaption}</div>
+          </div>
+        )}
+      </div>
     </>
   );
 }

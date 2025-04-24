@@ -4,7 +4,31 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import ProductPage from "./components/sections/ProductPage";
 import FaqsPage from "./components/sections/FaqsPage";
+import Footer from "./components/Footer";
+import { useEffect, useState } from "react";
+
 function App() {
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    // Simulate an API call or data fetching
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+
+  if (loading) {
+    return (
+      <>
+        <div className="loading-container">
+          <span className="loading"></span>
+          <p>Loading NG INA MO...</p>
+        </div>
+      </>
+    );
+  }
+
   return (
     <BrowserRouter>
       <div>
@@ -16,6 +40,7 @@ function App() {
           <Route path="/faq" element={<FaqsPage />} />
         </Routes>
       </div>
+      <Footer />
     </BrowserRouter>
   );
 }
