@@ -78,12 +78,14 @@ function Home() {
           </div>
         </div>
 
-        <h4 className="abt-comment">
+        <div className="abt-comment">
+          <p>
           We believe the past has style worth repeating. Our vintage thrift shop
           is all about giving pre-loved fashion and home goods a second life.
           Thoughtfully curated, sustainably sourced, and full of character —
           each piece is a find waiting to be found.
-        </h4>
+          </p>
+        </div>
       </section>
 
       <div className="gallery">

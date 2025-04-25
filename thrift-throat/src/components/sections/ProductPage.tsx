@@ -55,21 +55,21 @@ function ProductPage() {
     {
       id: 6,
       link: "../src/assets/images/jacket3.jpg",
-      type: "cap",
+      type: "jacket",
       name: "Nike 22x27.5",
       price: 600,
     },
     {
       id: 7,
       link: "../src/assets/images/jacket2.jpg",
-      type: "cap",
+      type: "jacket",
       name: "Adidas 21.5x27.5",
       price: 550,
     },
     {
       id: 8,
       link: "../src/assets/images/jack2.jpg",
-      type: "cap",
+      type: "jacket",
       name: "Marlboro 26x30",
       price: 800,
     },
@@ -83,21 +83,21 @@ function ProductPage() {
     {
       id: 10,
       link: "../src/assets/images/jack1.jpg",
-      type: "cap",
+      type: "jacket",
       name: "Nike 26x29",
       price: 1000,
     },
     {
       id: 11,
       link: "../src/assets/images/jack3.jpg",
-      type: "cap",
+      type: "jacket",
       name: "Bapesta 25x30",
       price: 600,
     },
     {
       id: 12,
       link: "../src/assets/images/ll1.jpg",
-      type: "cap",
+      type: "shirt",
       name: "The Mountain 25x34",
       price: 600,
     },
@@ -178,9 +178,7 @@ function ProductPage() {
 
   return (
     <>
-      <div className="paginationContainer">
-        <h1>Page {currentPage}</h1>
-      </div>
+    
 
       <section className="mainContentProductPage">
         <Filter></Filter>
