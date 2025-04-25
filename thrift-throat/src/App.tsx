@@ -24,12 +24,11 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div>
+      <div className="main">
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<ProductPage />} />
-          <Route path="/products/page?:pageNumber" element={<ProductPage />} />
           <Route path="/faq" element={<FaqsPage />} />
         </Routes>
       </div>
@@ -38,7 +37,7 @@ function App() {
         <>
           <div className="loading-container">
             <span className="loading"></span>
-            <p>Loading NG INA MO...</p>
+            <p>Getting the shop ready...</p>
           </div>
         </>
       )}

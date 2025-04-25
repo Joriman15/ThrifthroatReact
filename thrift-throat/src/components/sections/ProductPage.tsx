@@ -1,97 +1,134 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
-
+import Filter from "../Filter";
+import { useEffect, useState } from "react";
 function ProductPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const productsPerPage = 8; // Number of products per page
-
+  const [currentFrom, setCurrentFrom] = useState("0");
+  const [currentTo, setCurrentTo] = useState("5000");
+  const [filteredProducts, setFilteredProducts] = useState([
+    {
+      id: 1,
+      link: "",
+      type: "",
+      name: "",
+      price: 0,
+    },
+  ]);
   const products = [
     {
       id: 1,
       link: "../src/assets/images/cap1.jpg",
-      productType: "cap",
+      type: "cap",
       name: "Ralph Lauren",
       price: 600,
     },
     {
       id: 2,
       link: "../src/assets/images/cap2.jpg",
-      productType: "cap",
+      type: "cap",
       name: "Vintage Disney",
       price: 400,
     },
     {
       id: 3,
       link: "../src/assets/images/cap3.jpg",
-      productType: "cap",
+      type: "cap",
       name: "Vintage Vans",
       price: 500,
     },
     {
       id: 4,
       link: "../src/assets/images/cap4.jpg",
-      productType: "cap",
+      type: "cap",
       name: "Thrasher Dad Hat",
       price: 650,
     },
     {
       id: 5,
       link: "../src/assets/images/cap5.jpg",
-      productType: "cap",
+      type: "cap",
       name: "New Era C.",
       price: 500,
     },
     {
       id: 6,
       link: "../src/assets/images/jacket3.jpg",
-      productType: "cap",
+      type: "cap",
       name: "Nike 22x27.5",
       price: 600,
     },
     {
       id: 7,
       link: "../src/assets/images/jacket2.jpg",
-      productType: "cap",
+      type: "cap",
       name: "Adidas 21.5x27.5",
       price: 550,
     },
     {
       id: 8,
       link: "../src/assets/images/jack2.jpg",
-      productType: "cap",
+      type: "cap",
       name: "Marlboro 26x30",
       price: 800,
     },
     {
       id: 9,
       link: "../src/assets/images/jacket4.jpg",
-      productType: "cap",
+      type: "jacket",
       name: "Champion 20x25.5",
       price: 600,
     },
     {
       id: 10,
       link: "../src/assets/images/jack1.jpg",
-      productType: "cap",
+      type: "cap",
       name: "Nike 26x29",
       price: 1000,
     },
     {
       id: 11,
       link: "../src/assets/images/jack3.jpg",
-      productType: "cap",
+      type: "cap",
       name: "Bapesta 25x30",
       price: 600,
     },
     {
       id: 12,
       link: "../src/assets/images/ll1.jpg",
-      productType: "cap",
+      type: "cap",
       name: "The Mountain 25x34",
       price: 600,
     },
   ];
+
+  useEffect(() => {
+    filterProducts(getCurrentPage());
+  }, [location.search]);
+
+  const filterProducts = (page: number) => {
+    console.log("hello");
+    console.log(currentFrom);
+    const queryParams = new URLSearchParams(location.search);
+    queryParams.set("page", page.toString());
+    const from = parseInt(queryParams.get("from") || currentFrom);
+    const to = parseInt(queryParams.get("to") || currentTo);
+    // Get all category params (e.g., ?category=cap&category=jacket)
+    const categoryParams = queryParams.getAll("category");
+    let tempProducts = products.filter((product) => {
+      const inPriceRange = product.price >= from && product.price <= to;
+      const inCategory =
+        categoryParams.length === 0 || categoryParams.includes(product.type);
+
+      return inPriceRange && inCategory;
+    });
+
+    setFilteredProducts(tempProducts);
+    setCurrentFrom(from.toString());
+    setCurrentTo(to.toString());
+    handlePageChange(queryParams);
+  };
 
   // Get current page from URL query parameter or default to 1
   const getCurrentPage = () => {
@@ -101,23 +138,24 @@ function ProductPage() {
   };
 
   const currentPage = getCurrentPage();
-  const totalPages = Math.ceil(products.length / productsPerPage);
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
   // Get current products based on pagination
   const getCurrentProducts = () => {
     const startIndex = (currentPage - 1) * productsPerPage;
     const endIndex = startIndex + productsPerPage;
-    return products.slice(startIndex, endIndex);
+    return filteredProducts.slice(startIndex, endIndex);
   };
 
   const currentProducts = getCurrentProducts();
 
   // Handle pagination click
-  const handlePageChange = (newPage: number): void => {
+  const handlePageChange = (params: URLSearchParams): void => {
     // Update URL with new page number without changing component
-    if (currentPage != newPage) {
-      window.scrollTo({ top: 100, behavior: "smooth" });
-      navigate(`/products?page=${newPage}`);
+    if (currentPage != parseInt(params.get("page") || "1", 10)) {
+      window.scrollTo({ top: 120, behavior: "smooth" });
+      console.log("params=", params);
+      navigate(`/products?${params}`);
     }
   };
 
@@ -128,7 +166,7 @@ function ProductPage() {
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
           <button
             key={page}
-            onClick={() => handlePageChange(page)}
+            onClick={() => filterProducts(page)}
             className={currentPage === page ? "active" : ""}
           >
             {page}
@@ -145,6 +183,7 @@ function ProductPage() {
       </div>
 
       <section className="mainContentProductPage">
+        <Filter></Filter>
         <div className="productRow">
           {/* Each product row contains info of 4 elements (on pc)*/}
           {currentProducts.map((product) => (
