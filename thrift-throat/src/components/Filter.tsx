@@ -1,13 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import LoadingPage from "./loadingPage";
 
 function Filter() {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const [currentFrom, setCurrentFrom] = useState(""); // empty by default
-  const [currentTo, setCurrentTo] = useState(""); // empty by default
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]); // none selected
+  const [loading, setLoading] = useState(false);
+  const [timer, setTimer] = useState<number | null>(null);
+  const [currentFrom, setCurrentFrom] = useState("");
+  const [currentTo, setCurrentTo] = useState("");
+  const [currentOrder, setCurrentOrder] = useState("ascending");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const queryParamsRef = useRef(new URLSearchParams(location.search));
 
   const categories = [
     { id: 1, name: "cap" },
@@ -16,108 +20,114 @@ function Filter() {
     { id: 4, name: "shirt" },
   ];
 
-  // Sync with URL params on load or URL change
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const fromParam = queryParams.get("from");
     const toParam = queryParams.get("to");
+    const orderParam = queryParams.get("sort");
     const categoryParams = queryParams.getAll("category");
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 2100);
 
     setCurrentFrom(fromParam ?? "");
     setCurrentTo(toParam ?? "");
+    setCurrentOrder(orderParam ?? "ascending");
     setSelectedCategories(categoryParams);
   }, [location.search]);
 
-  const updateURL = (newParams: Record<string, string | string[]>) => {
-    const queryParams = new URLSearchParams(location.search);
+  const delayedNavigate = () => {
+    setLoading(true);
+    navigate(`/products?${queryParamsRef.current.toString()}`);
+  };
 
+  const startTimer = () => {
+    if (timer) clearTimeout(timer); // cancel previous timer
+    const newTimer = setTimeout(delayedNavigate, 1000); // wait 1s then navigate
+    setTimer(newTimer);
+  };
+
+  const updateURL = (newParams: Record<string, string | string[]>) => {
     Object.entries(newParams).forEach(([key, value]) => {
       if (Array.isArray(value)) {
-        queryParams.delete(key);
-        value.forEach((v) => queryParams.append(key, v));
+        queryParamsRef.current.delete(key);
+        value.forEach((v) => queryParamsRef.current.append(key, v));
       } else {
         if (value === "") {
-          queryParams.delete(key);
+          queryParamsRef.current.delete(key);
         } else {
-          queryParams.set(key, value);
+          queryParamsRef.current.set(key, value);
         }
       }
     });
-
-    queryParams.set("page", "1"); // Reset pagination
-    navigate(`/products?${queryParams.toString()}`);
+    queryParamsRef.current.set("page", "1"); // Reset pagination
+    startTimer(); // Every change restarts timer
   };
 
-  const handlePriceChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    type: "from" | "to"
-  ) => {
-    const value = e.target.value;
-    if (type === "from") setCurrentFrom(value);
-    if (type === "to") setCurrentTo(value);
-
-    updateURL({
-      from: type === "from" ? value : currentFrom,
-      to: type === "to" ? value : currentTo,
-    });
+  const handleSort = (order: string) => {
+    setCurrentOrder(order);
+    updateURL({ sort: order });
   };
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const isChecked = e.target.checked;
-
     let updated = [...selectedCategories];
     if (isChecked) {
       updated.push(value);
     } else {
       updated = updated.filter((v) => v !== value);
     }
-
     setSelectedCategories(updated);
     updateURL({ category: updated });
   };
 
   return (
-    <div className="filterContainer">
-      <h3 className="filterTitle">Filter</h3>
+    <>
+      <div className="filterContainer">
+        <h3 className="filterTitle">Filter</h3>
 
-      <div className="priceFilterContainer">
-        <h4 className="priceFilterTitle">Price</h4>
-        <input
-          type="number"
-          className="from"
-          min={0}
-          max={5000}
-          value={currentFrom}
-          onChange={(e) => handlePriceChange(e, "from")}
-        />
-        -
-        <input
-          type="number"
-          className="to"
-          min={0}
-          max={5000}
-          value={currentTo}
-          onChange={(e) => handlePriceChange(e, "to")}
-        />
-      </div>
-
-      <div className="categoryFilterContainer">
-        <h4 className="categoryFilterTitle">Category</h4>
-        {categories.map((category) => (
-          <div key={category.id} className="categories">
-            <input
-              type="checkbox"
-              className="category"
-              value={category.name}
-              checked={selectedCategories.includes(category.name)}
-              onChange={handleCategoryChange}
-            />
-            <label className="categoryLabel">{category.name}</label>
+        <div className="sortFilterContainer">
+          <h4 className="priceFilterTitle">Price</h4>
+          <div className="buttonContainer">
+            <button
+              className={`sortFilterButton ${
+                currentOrder == "ascending" ? "activeSort" : ""
+              }`}
+              onClick={() => handleSort("ascending")}
+            >
+              Ascending
+            </button>
+            <button
+              className={`sortFilterButton ${
+                currentOrder == "descending" ? "activeSort" : ""
+              }`}
+              onClick={() => handleSort("descending")}
+            >
+              Descending
+            </button>
           </div>
-        ))}
+        </div>
+
+        <div className="categoryFilterContainer">
+          <h4 className="categoryFilterTitle">Category</h4>
+          {categories.map((category) => (
+            <div key={category.id} className="categories">
+              <input
+                type="checkbox"
+                className="category"
+                value={category.name}
+                checked={selectedCategories.includes(category.name)}
+                onChange={handleCategoryChange}
+              />
+              <label className="categoryLabel">{category.name}</label>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+      {loading && <LoadingPage />}
+    </>
   );
 }
 
