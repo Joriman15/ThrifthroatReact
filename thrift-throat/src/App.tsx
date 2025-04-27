@@ -6,14 +6,16 @@ import ProductPage from "./components/sections/ProductPage";
 import FaqsPage from "./components/sections/FaqsPage";
 import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
+import LoadingPage from "./components/loadingPage";
 
 function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 2100);
   }, []);
 
   useEffect(() => {
@@ -33,14 +35,7 @@ function App() {
         </Routes>
       </div>
       <Footer />
-      {loading && (
-        <>
-          <div className="loading-container">
-            <span className="loading"></span>
-            <p>Getting the shop ready...</p>
-          </div>
-        </>
-      )}
+      <LoadingPage />
     </BrowserRouter>
   );
 }

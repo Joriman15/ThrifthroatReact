@@ -1,12 +1,15 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import Filter from "../Filter";
 import { useEffect, useState } from "react";
+import LoadingPage from "../loadingPage";
 function ProductPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const productsPerPage = 8; // Number of products per page
   const [currentFrom, setCurrentFrom] = useState("0");
   const [currentTo, setCurrentTo] = useState("5000");
+  const [currentOrder, setCurrentOrder] = useState("ascending");
+  const [currentCategory, setCurrentCategory] = useState(["Cap"]);
   const [filteredProducts, setFilteredProducts] = useState([
     {
       id: 1,
@@ -14,6 +17,7 @@ function ProductPage() {
       type: "",
       name: "",
       price: 0,
+      size: "",
     },
   ]);
   const products = [
@@ -23,6 +27,7 @@ function ProductPage() {
       type: "cap",
       name: "Ralph Lauren",
       price: 600,
+      size: "MEDIUM",
     },
     {
       id: 2,
@@ -30,6 +35,7 @@ function ProductPage() {
       type: "cap",
       name: "Vintage Disney",
       price: 400,
+      size: "MEDIUM",
     },
     {
       id: 3,
@@ -37,6 +43,7 @@ function ProductPage() {
       type: "cap",
       name: "Vintage Vans",
       price: 500,
+      size: "MEDIUM",
     },
     {
       id: 4,
@@ -44,6 +51,7 @@ function ProductPage() {
       type: "cap",
       name: "Thrasher Dad Hat",
       price: 650,
+      size: "MEDIUM",
     },
     {
       id: 5,
@@ -51,6 +59,7 @@ function ProductPage() {
       type: "cap",
       name: "New Era C.",
       price: 500,
+      size: "MEDIUM",
     },
     {
       id: 6,
@@ -58,6 +67,7 @@ function ProductPage() {
       type: "jacket",
       name: "Nike 22x27.5",
       price: 600,
+      size: "MEDIUM",
     },
     {
       id: 7,
@@ -65,6 +75,7 @@ function ProductPage() {
       type: "jacket",
       name: "Adidas 21.5x27.5",
       price: 550,
+      size: "MEDIUM",
     },
     {
       id: 8,
@@ -72,6 +83,7 @@ function ProductPage() {
       type: "jacket",
       name: "Marlboro 26x30",
       price: 800,
+      size: "MEDIUM",
     },
     {
       id: 9,
@@ -79,6 +91,7 @@ function ProductPage() {
       type: "jacket",
       name: "Champion 20x25.5",
       price: 600,
+      size: "MEDIUM",
     },
     {
       id: 10,
@@ -86,6 +99,7 @@ function ProductPage() {
       type: "jacket",
       name: "Nike 26x29",
       price: 1000,
+      size: "MEDIUM",
     },
     {
       id: 11,
@@ -93,6 +107,7 @@ function ProductPage() {
       type: "jacket",
       name: "Bapesta 25x30",
       price: 600,
+      size: "MEDIUM",
     },
     {
       id: 12,
@@ -100,22 +115,25 @@ function ProductPage() {
       type: "shirt",
       name: "The Mountain 25x34",
       price: 600,
+      size: "MEDIUM",
     },
   ];
 
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
     filterProducts(getCurrentPage());
   }, [location.search]);
 
   const filterProducts = (page: number) => {
-    console.log("hello");
-    console.log(currentFrom);
     const queryParams = new URLSearchParams(location.search);
     queryParams.set("page", page.toString());
     const from = parseInt(queryParams.get("from") || currentFrom);
     const to = parseInt(queryParams.get("to") || currentTo);
+    const order = queryParams.get("sort") || currentOrder;
     // Get all category params (e.g., ?category=cap&category=jacket)
-    const categoryParams = queryParams.getAll("category");
+    const categoryParams = queryParams.getAll("category") || currentCategory;
     let tempProducts = products.filter((product) => {
       const inPriceRange = product.price >= from && product.price <= to;
       const inCategory =
@@ -123,10 +141,17 @@ function ProductPage() {
 
       return inPriceRange && inCategory;
     });
+    if (order == "ascending") {
+      tempProducts.sort((a, b) => a.price - b.price);
+    } else {
+      tempProducts.sort((a, b) => b.price - a.price);
+    }
 
     setFilteredProducts(tempProducts);
     setCurrentFrom(from.toString());
     setCurrentTo(to.toString());
+    setCurrentOrder(order);
+    setCurrentCategory(categoryParams);
     handlePageChange(queryParams);
   };
 
@@ -178,24 +203,34 @@ function ProductPage() {
 
   return (
     <>
-    
-
       <section className="mainContentProductPage">
         <Filter></Filter>
         <div className="productRow">
           {/* Each product row contains info of 4 elements (on pc)*/}
           {currentProducts.map((product) => (
             <div key={product.id} className="productInfoContainer">
-              <div className="productImageContainer">
-                <img
-                  className="productImage"
-                  alt="product"
-                  src={product.link}
-                />
-              </div>
-              <div className="productInfo">
-                <p className="productContent">{product.name}</p>
-                <p className="price">PHP {product.price}</p>
+              <div className="card-inner">
+                <div className="card-front">
+                  <div className="productImageContainer">
+                    <img
+                      className="productImage"
+                      alt="product"
+                      src={product.link}
+                    />
+                  </div>
+                  <div className="productInfo">
+                    <p className="productContent">{product.name}</p>
+                    <p className="price">PHP {product.price}</p>
+                  </div>
+                </div>
+                <div className="card-back">
+                  <div className="productInfo">
+                    <p className="productContent">
+                      {product.type.toUpperCase()}
+                    </p>
+                    <p className="productContent">{product.size}</p>
+                  </div>
+                </div>
               </div>
 
               {/* <button>Add to Cart</button> */}
