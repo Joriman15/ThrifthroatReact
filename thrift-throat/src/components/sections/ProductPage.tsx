@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import Filter from "../Filter";
 import { useEffect, useState } from "react";
-
+import LoadingPage from "../loadingPage";
 function ProductPage() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -120,7 +120,9 @@ function ProductPage() {
   ];
 
   useEffect(() => {
-    
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
     filterProducts(getCurrentPage());
   }, [location.search]);
 

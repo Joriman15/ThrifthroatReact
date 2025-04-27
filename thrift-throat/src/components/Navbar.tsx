@@ -1,24 +1,13 @@
 import { NavLink } from "react-router-dom";
-import { useRef } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
-
 
 function Navbar() {
-
-  const navRef = useRef<HTMLElement>(null);
-
-
-  const showNavbar = () =>{
-    navRef.current?.classList.toggle("responsive_nav");
-  }
-
   return (
     <>
       <header className="header-container">
         <div className="logo">
           <img src="../src/assets/images/logo.jpg" width="50px" />
         </div>
-        <nav ref={navRef}>
+        <nav>
           <ul className="nav-links">
             <li>
               <NavLink
@@ -45,13 +34,7 @@ function Navbar() {
               </NavLink>
             </li>
           </ul>
-           <button className="nav-btn nav-close-btn" onClick={showNavbar}>
-            <FaTimes/>
-          </button>
         </nav>
-         <button className="nav-btn" onClick={showNavbar}>
-          <FaBars/>
-        </button>
       </header>
     </>
   );
