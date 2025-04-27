@@ -89,7 +89,7 @@ function Home() {
       </section>
 
       <div className="gallery">
-        <div className="sub-gallery">
+        
           {galleryImages.map((image) => (
             <img
               id={`myImg${image.id}`}
@@ -99,7 +99,7 @@ function Home() {
               onClick={() => openModal(image.src, image.alt)}
             />
           ))}
-        </div>
+        
 
         {/* Modal */}
         {modalState.isOpen && (

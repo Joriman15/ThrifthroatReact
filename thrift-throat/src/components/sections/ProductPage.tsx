@@ -201,7 +201,7 @@ function ProductPage() {
               {/* <button>Add to Cart</button> */}
             </div>
           ))}
-        </div>
+        </div> 
       </section>
       {renderPagination()}
     </>
