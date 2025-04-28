@@ -6,7 +6,7 @@ import ProductPage from "./components/sections/ProductPage";
 import FaqsPage from "./components/sections/FaqsPage";
 import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
-import LoadingPage from "./components/loadingPage";
+import LoadingPage from "./components/LoadingPage";
 
 function App() {
   const [loading, setLoading] = useState(true);

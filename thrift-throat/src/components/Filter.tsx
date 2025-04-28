@@ -1,13 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import LoadingPage from "./LoadingPage";
+
 
 function Filter() {
   const navigate = useNavigate();
   const location = useLocation();
   const [timer, setTimer] = useState<number | null>(null);
-  const [currentFrom, setCurrentFrom] = useState("");
-  const [currentTo, setCurrentTo] = useState("");
   const [currentOrder, setCurrentOrder] = useState("ascending");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const queryParamsRef = useRef(new URLSearchParams(location.search));
@@ -21,14 +19,10 @@ function Filter() {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-    const fromParam = queryParams.get("from");
-    const toParam = queryParams.get("to");
     const orderParam = queryParams.get("sort");
     const categoryParams = queryParams.getAll("category");
 
    
-    setCurrentFrom(fromParam ?? "");
-    setCurrentTo(toParam ?? "");
     setCurrentOrder(orderParam ?? "ascending");
     setSelectedCategories(categoryParams);
   }, [location.search]);
