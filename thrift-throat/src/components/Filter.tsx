@@ -1,11 +1,10 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import LoadingPage from "./loadingPage";
+import LoadingPage from "./LoadingPage";
 
 function Filter() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [loading, setLoading] = useState(false);
   const [timer, setTimer] = useState<number | null>(null);
   const [currentFrom, setCurrentFrom] = useState("");
   const [currentTo, setCurrentTo] = useState("");
@@ -27,10 +26,7 @@ function Filter() {
     const orderParam = queryParams.get("sort");
     const categoryParams = queryParams.getAll("category");
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 2100);
-
+   
     setCurrentFrom(fromParam ?? "");
     setCurrentTo(toParam ?? "");
     setCurrentOrder(orderParam ?? "ascending");
@@ -38,7 +34,6 @@ function Filter() {
   }, [location.search]);
 
   const delayedNavigate = () => {
-    setLoading(true);
     navigate(`/products?${queryParamsRef.current.toString()}`);
   };
 
@@ -126,7 +121,6 @@ function Filter() {
           ))}
         </div>
       </div>
-      {loading && <LoadingPage />}
     </>
   );
 }
