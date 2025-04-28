@@ -1,5 +1,5 @@
 {
-  "homepage": "https://joriman15.github.io/ThrifthroatReact/",
+  "homepage": "https://joriman15.github.io/ThrifthroatReact",
   "name": "thrift-throat",
   "private": true,
   "version": "0.0.0",
@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "lucide-react": "^0.503.0",
