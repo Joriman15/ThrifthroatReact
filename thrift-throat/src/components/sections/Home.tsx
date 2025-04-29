@@ -31,12 +31,12 @@ function Home() {
   const galleryImages = [
     {
       id: 1,
-      src: "../../src/assets/images/caps.jpg",
+      src: "../src/assets/images/caps.jpg",
       alt: "A unique mix of vintage hats for every mood and moment.",
     },
     {
       id: 2,
-      src: "../../src/assets/images/pants.jpg",
+      src: "/ThrifthroatReact/assets/pants.jpg",
       alt: "Vintage pants in all styles, fits, and vibes — find your perfect pair.",
     },
     {

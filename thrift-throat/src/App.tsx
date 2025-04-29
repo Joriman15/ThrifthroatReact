@@ -29,9 +29,9 @@ function App() {
       <div className="main">
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<ProductPage />} />
-          <Route path="/faq" element={<FaqsPage />} />
+          <Route path="/ThrifthroatReact" element={<Home />} />
+          <Route path="/ThrifthroatReact/products" element={<ProductPage />} />
+          <Route path="/ThrifthroatReact/faq" element={<FaqsPage />} />
         </Routes>
       </div>
       <Footer />
