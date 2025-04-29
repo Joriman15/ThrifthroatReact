@@ -1,4 +1,10 @@
 // THIS IS FOR THE LANDING PAGE OR HOME PAGE
+import caps from '../../assets/images/caps.jpg';
+import pants from '../../assets/images/pants.jpg';
+import shirts from '../../assets/images/shirts.jpg';
+import shirts2 from '../../assets/images/shirts2.jpg';
+import poloshirt from '../../assets/images/poloshirt.jpg';
+import logo from '../../assets/images/logo.jpg';
 
 import { useState } from "react";
 
@@ -31,27 +37,27 @@ function Home() {
   const galleryImages = [
     {
       id: 1,
-      src: "../../src/assets/images/caps.jpg",
+      src: caps,
       alt: "A unique mix of vintage hats for every mood and moment.",
     },
     {
       id: 2,
-      src: "../../src/assets/images/pants.jpg",
+      src: pants,
       alt: "Vintage pants in all styles, fits, and vibes — find your perfect pair.",
     },
     {
       id: 3,
-      src: "../src/assets/images/shirts.jpg",
+      src: shirts,
       alt: "A mix of vintage tops with personality, pattern, and plenty of charm.",
     },
     {
       id: 4,
-      src: "../src/assets/images/shirts2.jpg",
+      src: shirts2,
       alt: "From bold prints to classic cuts — vintage shirts for every statement.",
     },
     {
       id: 5,
-      src: "../src/assets/images/poloshirt.jpg",
+      src: poloshirt,
       alt: "Each shirt has a past. Ready to be part of yours.",
     },
   ];
@@ -74,7 +80,7 @@ function Home() {
         <div className="abt-subsection">
           <h2 className="abt-title">About Thrifthroat</h2>
           <div className="logo">
-            <img src="../src/assets/images/logo.jpg" width="50px" />
+            <img src={logo} width="50px" />
           </div>
         </div>
 
