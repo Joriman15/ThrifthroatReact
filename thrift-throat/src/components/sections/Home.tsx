@@ -1,6 +1,7 @@
 // THIS IS FOR THE LANDING PAGE OR HOME PAGE
 
 import { useState } from "react";
+import "./App.css";
 
 function Home() {
   // State for managing modal visibility and content
@@ -80,24 +81,26 @@ function Home() {
 
         <div className="abt-comment">
           <p>
-            We believe the past has style worth repeating. Our vintage thrift
-            shop is all about giving pre-loved fashion and home goods a second
-            life. Thoughtfully curated, sustainably sourced, and full of
-            character — each piece is a find waiting to be found.
+          We believe the past has style worth repeating. Our vintage thrift shop
+          is all about giving pre-loved fashion and home goods a second life.
+          Thoughtfully curated, sustainably sourced, and full of character —
+          each piece is a find waiting to be found.
           </p>
         </div>
       </section>
 
       <div className="gallery">
-        {galleryImages.map((image) => (
-          <img
-            id={`myImg${image.id}`}
-            key={image.id}
-            src={image.src}
-            alt={image.alt}
-            onClick={() => openModal(image.src, image.alt)}
-          />
-        ))}
+        
+          {galleryImages.map((image) => (
+            <img
+              id={`myImg${image.id}`}
+              key={image.id}
+              src={image.src}
+              alt={image.alt}
+              onClick={() => openModal(image.src, image.alt)}
+            />
+          ))}
+        
 
         {/* Modal */}
         {modalState.isOpen && (
