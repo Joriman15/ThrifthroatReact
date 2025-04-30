@@ -23,7 +23,7 @@ function ProductPage() {
   const products = [
     {
       id: 1,
-      link: "../src/assets/images/cap1.jpg",
+      link: "/cap1.jpg",
       type: "cap",
       name: "Ralph Lauren",
       price: 600,
@@ -120,7 +120,6 @@ function ProductPage() {
   ];
 
   useEffect(() => {
-    
     filterProducts(getCurrentPage());
   }, [location.search]);
 
@@ -234,7 +233,7 @@ function ProductPage() {
               {/* <button>Add to Cart</button> */}
             </div>
           ))}
-        </div> 
+        </div>
       </section>
       {renderPagination()}
     </>
