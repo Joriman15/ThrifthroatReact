@@ -23,7 +23,7 @@ function ProductPage() {
   const products = [
     {
       id: 1,
-      link: "/cap1.jpg",
+      link: "assets/cap1.jpg",
       type: "cap",
       name: "Ralph Lauren",
       price: 600,
