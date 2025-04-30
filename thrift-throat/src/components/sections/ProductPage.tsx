@@ -23,7 +23,7 @@ function ProductPage() {
   const products = [
     {
       id: 1,
-      link: "assets/cap1.jpg",
+      link: "/images/cap1.jpg",
       type: "cap",
       name: "Ralph Lauren",
       price: 600,
@@ -31,7 +31,7 @@ function ProductPage() {
     },
     {
       id: 2,
-      link: "../src/assets/images/cap2.jpg",
+      link: "/images/cap2.jpg",
       type: "cap",
       name: "Vintage Disney",
       price: 400,
@@ -39,7 +39,7 @@ function ProductPage() {
     },
     {
       id: 3,
-      link: "../src/assets/images/cap3.jpg",
+      link: "/images/cap3.jpg",
       type: "cap",
       name: "Vintage Vans",
       price: 500,
@@ -47,7 +47,7 @@ function ProductPage() {
     },
     {
       id: 4,
-      link: "../src/assets/images/cap4.jpg",
+      link: "/images/cap4.jpg",
       type: "cap",
       name: "Thrasher Dad Hat",
       price: 650,
@@ -55,7 +55,7 @@ function ProductPage() {
     },
     {
       id: 5,
-      link: "../src/assets/images/cap5.jpg",
+      link: "/images/cap5.jpg",
       type: "cap",
       name: "New Era C.",
       price: 500,
@@ -63,7 +63,7 @@ function ProductPage() {
     },
     {
       id: 6,
-      link: "../src/assets/images/jacket3.jpg",
+      link: "/images/jacket3.jpg",
       type: "jacket",
       name: "Nike 22x27.5",
       price: 600,
@@ -71,7 +71,7 @@ function ProductPage() {
     },
     {
       id: 7,
-      link: "../src/assets/images/jacket2.jpg",
+      link: "/images/jacket2.jpg",
       type: "jacket",
       name: "Adidas 21.5x27.5",
       price: 550,
@@ -79,7 +79,7 @@ function ProductPage() {
     },
     {
       id: 8,
-      link: "../src/assets/images/jack2.jpg",
+      link: "/images/jack2.jpg",
       type: "jacket",
       name: "Marlboro 26x30",
       price: 800,
@@ -87,7 +87,7 @@ function ProductPage() {
     },
     {
       id: 9,
-      link: "../src/assets/images/jacket4.jpg",
+      link: "/images/jacket4.jpg",
       type: "jacket",
       name: "Champion 20x25.5",
       price: 600,
@@ -95,7 +95,7 @@ function ProductPage() {
     },
     {
       id: 10,
-      link: "../src/assets/images/jack1.jpg",
+      link: "/images/jack1.jpg",
       type: "jacket",
       name: "Nike 26x29",
       price: 1000,
@@ -103,7 +103,7 @@ function ProductPage() {
     },
     {
       id: 11,
-      link: "../src/assets/images/jack3.jpg",
+      link: "/images/jack3.jpg",
       type: "jacket",
       name: "Bapesta 25x30",
       price: 600,
@@ -111,7 +111,7 @@ function ProductPage() {
     },
     {
       id: 12,
-      link: "../src/assets/images/ll1.jpg",
+      link: "/images/ll1.jpg",
       type: "shirt",
       name: "The Mountain 25x34",
       price: 600,
