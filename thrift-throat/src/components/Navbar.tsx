@@ -39,7 +39,7 @@ function Navbar() {
     <>
       <header className="header-container">
         <div className="logo">
-          <img src="../src/assets/images/logo.jpg" width="50px" />
+          <img src="../src/assets/images/logo2.png" width="50px" />
         </div>
         <nav ref={navRef}>
           <ul className="nav-links">
@@ -47,7 +47,10 @@ function Navbar() {
               <NavLink
                 to="/"
                 className={({ isActive }) => (isActive ? "activeNav" : "")}
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(true);
+                  showNavbar(); 
+                }}
               >
                 Home
               </NavLink>
@@ -56,7 +59,10 @@ function Navbar() {
               <NavLink
                 to="/products"
                 className={({ isActive }) => (isActive ? "activeNav" : "")}
-                onClick={() => setIsOpen(true)}
+                onClick={() => {
+                  setIsOpen(true);
+                  showNavbar(); 
+                }}
               >
                 Products
               </NavLink>
@@ -65,7 +71,10 @@ function Navbar() {
               <NavLink
                 to="/faq"
                 className={({ isActive }) => (isActive ? "activeNav" : "")}
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(true);
+                  showNavbar(); 
+                }}
               >
                 FAQs
               </NavLink>
@@ -88,7 +97,7 @@ function Navbar() {
           </button>
         </nav>
         <button className="nav-btn" onClick={showNavbar}>
-          <FaBars />
+          <FaBars size={23} />
         </button>
       </header>
 
