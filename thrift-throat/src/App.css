@@ -949,7 +949,7 @@ footer {
 /* RESPONSIVENESS */
 /*PHONES*/
 
-@media (max-width: 600px){
+@media (max-width: 768px){
 /* navbar */
 nav {
   position: absolute;
