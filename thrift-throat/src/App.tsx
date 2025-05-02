@@ -7,12 +7,12 @@ import FaqsPage from "./components/sections/FaqsPage";
 import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
 import LoadingPage from "./components/LoadingPage";
+import CheckoutPage from "./components/sections/CheckoutPage";
 
 function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 2100);
@@ -32,9 +32,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<ProductPage />} />
           <Route path="/faq" element={<FaqsPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>
+        <Footer />
       </div>
-      <Footer />
       <LoadingPage />
     </BrowserRouter>
   );

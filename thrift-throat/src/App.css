@@ -72,6 +72,36 @@
 }
 /* NAVBAR */
 
+.cartContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  height: 100%;
+}
+.cartContainer svg {
+  width: 24px;
+  height: 24px;
+}
+
+.cartContainer svg:hover {
+  background-color:#ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.amount {
+  position: absolute;
+  top: -5px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 2px 5px;
+  border-radius: 50%;
+}
+
 header .nav-btn{
   padding: 5px;
   cursor: pointer;
@@ -107,12 +137,14 @@ a{
 }
 
 .nav-links {
-    list-style: none;
+  list-style: none;
+  display: flex;
+  align-items: center; /* Vertically centers items */
 }
 
-.nav-links li{
-    display: inline-block;
-    padding: 0px 20px;
+.nav-links li {
+  display: inline-block;
+  padding: 0 20px;
 }
 
 .nav-links li a{
@@ -174,7 +206,7 @@ footer {
    width: 100%;
    height: 100vh;
    position:relative;
-   background: url("../src/assets/images/hero.jpg") center/cover ;
+   background: url("/images/hero.jpg") center/cover ;
    
 }
 .app-ready .main-subsection{
@@ -413,7 +445,6 @@ footer {
   padding: 0.5rem 1.5rem;
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* light shadow */
-  transition: all 0.3s ease; 
   margin-bottom: 1rem;
 }
 
@@ -471,17 +502,17 @@ footer {
   border-radius: 10px;
 }
 
-.productInfoContainer{
+.productInfoContainer {
   perspective: 1000px;
 }
-.card-inner{
+
+.card-inner {
   display: flex;
   justify-content: center;
-  
   text-align: center;
   color: white;
   background-color: black;
-  margin:10px;
+  margin: 10px;
   width: 25vh;
   height: 30vh;
   border-radius: 10px;
@@ -491,27 +522,53 @@ footer {
   transform-style: preserve-3d;
 }
 
-.productInfoContainer:hover .card-inner{
-    cursor: pointer;
-    transform: rotateY(180deg);
-
+.card-inner:hover{
+  cursor: pointer;
+}
+.card-inner.flipped {
+  transform: rotateY(180deg);
 }
 
 .card-front,
 .card-back {
   position: absolute;
+  width: 100%;
+  height: 100%;
   backface-visibility: hidden;
+  border-radius: 10px;
+}
+
+.card-front {
+  background: black;
 }
 
 .card-back {
-  margin-top: 50%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   font-size: larger;
   background: #000000;
-  color: white;
   transform: rotateY(180deg);
 }
 
-
+.addCart{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: small;
+  font-weight: bold;
+  background-color: #f2f2f2;
+  border: 2px solid transparent;
+  border-radius: 10px; /* super rounded like a bubble */
+  padding: 0.5rem 0.5rem;
+}
+.addCart:hover{
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transform: scale(1.05);
+}
 .activePage{
   font-weight: bold;
 }
@@ -534,6 +591,76 @@ footer {
   color: white;
 }
 
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  padding: 1rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.cart-item {
+  border-bottom: 1px solid #ccc;
+  padding: 1rem 0;
+  position: relative;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border: none;
+  background: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color:red;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+
+.remove-btn:hover,
+.remove-btn:focus {
+  color: brown;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cart-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+}
+.checkout-btn {
+  display: block;
+  margin: 1rem auto 0;
+  padding: 0.75rem 1.5rem;
+  background-color: #000000;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.checkout-btn:hover {
+  background-color: brown;
+}
+
+
+/* FAQs */
 .lContent{
 
   display: flex;
@@ -595,6 +722,51 @@ footer {
   border: 1px solid, rgba(0, 0, 0, 0.2);
   margin: 10px 0;
 }
+
+/* CHECKOUT */
+.checkout-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+.checkout-form label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.checkout-form input,
+.checkout-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.checkout-form textarea {
+  min-height: 100px;
+  resize: none;
+}
+
+.submit-btn {
+  background: black;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: gray;
+}
+
 
 /* RESPONSIVENESS */
 /*PHONES*/
@@ -688,7 +860,6 @@ a{
 .main-section{
  width: 100%;
  height: 100dvh;
- background: url("../src/assets/images/hero.jpg") center/cover ;
 }
 
 

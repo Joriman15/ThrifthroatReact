@@ -31,27 +31,27 @@ function Home() {
   const galleryImages = [
     {
       id: 1,
-      src: "../src/assets/images/caps.jpg",
+      src: "/images/caps.jpg",
       alt: "A unique mix of vintage hats for every mood and moment.",
     },
     {
       id: 2,
-      src: "../src/assets/images/pants.jpg",
+      src: "/images/pants.jpg",
       alt: "Vintage pants in all styles, fits, and vibes — find your perfect pair.",
     },
     {
       id: 3,
-      src: "../src/assets/images/shirts.jpg",
+      src: "/images/shirts.jpg",
       alt: "A mix of vintage tops with personality, pattern, and plenty of charm.",
     },
     {
       id: 4,
-      src: "../src/assets/images/shirts2.jpg",
+      src: "/images/shirts2.jpg",
       alt: "From bold prints to classic cuts — vintage shirts for every statement.",
     },
     {
       id: 5,
-      src: "../src/assets/images/poloshirt.jpg",
+      src: "/images/poloshirt.jpg",
       alt: "Each shirt has a past. Ready to be part of yours.",
     },
   ];
@@ -74,32 +74,30 @@ function Home() {
         <div className="abt-subsection">
           <h2 className="abt-title">About Thrifthroat</h2>
           <div className="logo">
-            <img src="../src/assets/images/logo.jpg" width="50px" />
+            <img src="/images/logo.jpg" width="50px" />
           </div>
         </div>
 
         <div className="abt-comment">
           <p>
-          We believe the past has style worth repeating. Our vintage thrift shop
-          is all about giving pre-loved fashion and home goods a second life.
-          Thoughtfully curated, sustainably sourced, and full of character —
-          each piece is a find waiting to be found.
+            We believe the past has style worth repeating. Our vintage thrift
+            shop is all about giving pre-loved fashion and home goods a second
+            life. Thoughtfully curated, sustainably sourced, and full of
+            character — each piece is a find waiting to be found.
           </p>
         </div>
       </section>
 
       <div className="gallery">
-        
-          {galleryImages.map((image) => (
-            <img
-              id={`myImg${image.id}`}
-              key={image.id}
-              src={image.src}
-              alt={image.alt}
-              onClick={() => openModal(image.src, image.alt)}
-            />
-          ))}
-        
+        {galleryImages.map((image) => (
+          <img
+            id={`myImg${image.id}`}
+            key={image.id}
+            src={image.src}
+            alt={image.alt}
+            onClick={() => openModal(image.src, image.alt)}
+          />
+        ))}
 
         {/* Modal */}
         {modalState.isOpen && (

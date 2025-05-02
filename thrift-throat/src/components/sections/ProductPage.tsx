@@ -1,10 +1,12 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import Filter from "../Filter";
 import { useEffect, useState } from "react";
+import { useCart } from "../../context/CartContext";
 
 function ProductPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { saveItem } = useCart();
   const productsPerPage = 8; // Number of products per page
   const [currentFrom, setCurrentFrom] = useState("0");
   const [currentTo, setCurrentTo] = useState("5000");
@@ -23,7 +25,7 @@ function ProductPage() {
   const products = [
     {
       id: 1,
-      link: "../src/assets/images/cap1.jpg",
+      link: "/images/cap1.jpg",
       type: "cap",
       name: "Ralph Lauren",
       price: 600,
@@ -31,7 +33,7 @@ function ProductPage() {
     },
     {
       id: 2,
-      link: "../src/assets/images/cap2.jpg",
+      link: "/images/cap2.jpg",
       type: "cap",
       name: "Vintage Disney",
       price: 400,
@@ -39,7 +41,7 @@ function ProductPage() {
     },
     {
       id: 3,
-      link: "../src/assets/images/cap3.jpg",
+      link: "/images/cap3.jpg",
       type: "cap",
       name: "Vintage Vans",
       price: 500,
@@ -47,7 +49,7 @@ function ProductPage() {
     },
     {
       id: 4,
-      link: "../src/assets/images/cap4.jpg",
+      link: "/images/cap4.jpg",
       type: "cap",
       name: "Thrasher Dad Hat",
       price: 650,
@@ -55,7 +57,7 @@ function ProductPage() {
     },
     {
       id: 5,
-      link: "../src/assets/images/cap5.jpg",
+      link: "/images/cap5.jpg",
       type: "cap",
       name: "New Era C.",
       price: 500,
@@ -63,7 +65,7 @@ function ProductPage() {
     },
     {
       id: 6,
-      link: "../src/assets/images/jacket3.jpg",
+      link: "/images/jacket3.jpg",
       type: "jacket",
       name: "Nike 22x27.5",
       price: 600,
@@ -71,7 +73,7 @@ function ProductPage() {
     },
     {
       id: 7,
-      link: "../src/assets/images/jacket2.jpg",
+      link: "/images/jacket2.jpg",
       type: "jacket",
       name: "Adidas 21.5x27.5",
       price: 550,
@@ -79,7 +81,7 @@ function ProductPage() {
     },
     {
       id: 8,
-      link: "../src/assets/images/jack2.jpg",
+      link: "/images/jack2.jpg",
       type: "jacket",
       name: "Marlboro 26x30",
       price: 800,
@@ -87,7 +89,7 @@ function ProductPage() {
     },
     {
       id: 9,
-      link: "../src/assets/images/jacket4.jpg",
+      link: "/images/jacket4.jpg",
       type: "jacket",
       name: "Champion 20x25.5",
       price: 600,
@@ -95,7 +97,7 @@ function ProductPage() {
     },
     {
       id: 10,
-      link: "../src/assets/images/jack1.jpg",
+      link: "/images/jack1.jpg",
       type: "jacket",
       name: "Nike 26x29",
       price: 1000,
@@ -103,7 +105,7 @@ function ProductPage() {
     },
     {
       id: 11,
-      link: "../src/assets/images/jack3.jpg",
+      link: "/images/jack3.jpg",
       type: "jacket",
       name: "Bapesta 25x30",
       price: 600,
@@ -111,7 +113,7 @@ function ProductPage() {
     },
     {
       id: 12,
-      link: "../src/assets/images/ll1.jpg",
+      link: "/images/ll1.jpg",
       type: "shirt",
       name: "The Mountain 25x34",
       price: 600,
@@ -119,8 +121,21 @@ function ProductPage() {
     },
   ];
 
+  const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
+
+  const toggleFlip = (id: number) => {
+    setFlippedCards((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  };
+
   useEffect(() => {
-    
     filterProducts(getCurrentPage());
   }, [location.search]);
 
@@ -177,7 +192,7 @@ function ProductPage() {
     // Update URL with new page number without changing component
     if (currentPage != parseInt(params.get("page") || "1", 10)) {
       window.scrollTo({ top: 120, behavior: "smooth" });
-      console.log("params=", params);
+      setFlippedCards(new Set());
       navigate(`/products?${params}`);
     }
   };
@@ -199,6 +214,10 @@ function ProductPage() {
     );
   };
 
+  const saveCartItems = (item: any) => {
+    saveItem([item]);
+  };
+
   return (
     <>
       <section className="mainContentProductPage">
@@ -207,7 +226,12 @@ function ProductPage() {
           {/* Each product row contains info of 4 elements (on pc)*/}
           {currentProducts.map((product) => (
             <div key={product.id} className="productInfoContainer">
-              <div className="card-inner">
+              <div
+                className={`card-inner ${
+                  flippedCards.has(product.id) ? "flipped" : ""
+                }`}
+                onClick={() => toggleFlip(product.id)}
+              >
                 <div className="card-front">
                   <div className="productImageContainer">
                     <img
@@ -230,11 +254,17 @@ function ProductPage() {
                   </div>
                 </div>
               </div>
-
-              {/* <button>Add to Cart</button> */}
+              <div className="buttonContainer">
+                <button
+                  className="addCart"
+                  onClick={() => saveCartItems(product)}
+                >
+                  ADD TO CART
+                </button>
+              </div>
             </div>
           ))}
-        </div> 
+        </div>
       </section>
       {renderPagination()}
     </>
