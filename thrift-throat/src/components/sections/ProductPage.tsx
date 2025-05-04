@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Filter from "../Filter";
 import { useEffect, useState } from "react";
 import { useCart } from "../../context/CartContext";
+import Modal from "../Modal";
 
 function ProductPage() {
   const navigate = useNavigate();
@@ -12,16 +13,36 @@ function ProductPage() {
   const [currentTo, setCurrentTo] = useState("5000");
   const [currentOrder, setCurrentOrder] = useState("ascending");
   const [currentCategory, setCurrentCategory] = useState(["Cap"]);
-  const [filteredProducts, setFilteredProducts] = useState([
-    {
-      id: 1,
-      link: "",
-      type: "",
-      name: "",
-      price: 0,
-      size: "",
-    },
-  ]);
+  const [modalImages, setModalImages] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMeasurement, setModalMeasurement] = useState("");
+  const [modalPrice, setModalPrice] = useState("");
+  const [modalBrandModel, setModalBrandModel] = useState("");
+  const [modalSizes, setModalSizes] = useState("");
+
+  const openModal = (
+    images: string[],
+    price: string,
+    brandModel: string,
+    measurement: string,
+    sizes: string
+  ) => {
+    const imagesToShow = images.length > 0 && images[0] !== "" ? images : [];
+    setModalImages(imagesToShow);
+    setModalMeasurement(measurement);
+    setModalBrandModel(brandModel);
+    setModalPrice(price);
+    setModalSizes(sizes);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalImages([]);
+  };
+
+  const [filteredProducts, setFilteredProducts] = useState<typeof products>([]);
+
   const products = [
     {
       id: 1,
@@ -30,6 +51,9 @@ function ProductPage() {
       name: "Ralph Lauren",
       price: 600,
       size: "MEDIUM",
+      extraImages: ["/images/cap1.jpg", "/images/cap2.jpg"],
+      measurement: "malaki",
+      brandModel: "lacost",
     },
     {
       id: 2,
@@ -38,6 +62,9 @@ function ProductPage() {
       name: "Vintage Disney",
       price: 400,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "malaki",
+      brandModel: "lacost",
     },
     {
       id: 3,
@@ -46,6 +73,9 @@ function ProductPage() {
       name: "Vintage Vans",
       price: 500,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "malaki",
+      brandModel: "lacost",
     },
     {
       id: 4,
@@ -54,6 +84,9 @@ function ProductPage() {
       name: "Thrasher Dad Hat",
       price: 650,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "malaki",
+      brandModel: "lacost",
     },
     {
       id: 5,
@@ -62,6 +95,9 @@ function ProductPage() {
       name: "New Era C.",
       price: 500,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "malaki",
+      brandModel: "lacost",
     },
     {
       id: 6,
@@ -70,6 +106,9 @@ function ProductPage() {
       name: "Nike 22x27.5",
       price: 600,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "malaki",
+      brandModel: "lacost",
     },
     {
       id: 7,
@@ -78,6 +117,9 @@ function ProductPage() {
       name: "Adidas 21.5x27.5",
       price: 550,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "malaki",
+      brandModel: "lacost",
     },
     {
       id: 8,
@@ -86,6 +128,9 @@ function ProductPage() {
       name: "Marlboro 26x30",
       price: 800,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "malaki",
+      brandModel: "lacost",
     },
     {
       id: 9,
@@ -94,6 +139,9 @@ function ProductPage() {
       name: "Champion 20x25.5",
       price: 600,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "malaki",
+      brandModel: "lacost",
     },
     {
       id: 10,
@@ -102,6 +150,9 @@ function ProductPage() {
       name: "Nike 26x29",
       price: 1000,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "malaki",
+      brandModel: "lacost",
     },
     {
       id: 11,
@@ -110,6 +161,9 @@ function ProductPage() {
       name: "Bapesta 25x30",
       price: 600,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "malaki",
+      brandModel: "lacost",
     },
     {
       id: 12,
@@ -118,22 +172,11 @@ function ProductPage() {
       name: "The Mountain 25x34",
       price: 600,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "malaki",
+      brandModel: "lacost",
     },
   ];
-
-  const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set());
-
-  const toggleFlip = (id: number) => {
-    setFlippedCards((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(id)) {
-        newSet.delete(id);
-      } else {
-        newSet.add(id);
-      }
-      return newSet;
-    });
-  };
 
   useEffect(() => {
     filterProducts(getCurrentPage());
@@ -192,7 +235,6 @@ function ProductPage() {
     // Update URL with new page number without changing component
     if (currentPage != parseInt(params.get("page") || "1", 10)) {
       window.scrollTo({ top: 120, behavior: "smooth" });
-      setFlippedCards(new Set());
       navigate(`/products?${params}`);
     }
   };
@@ -226,31 +268,30 @@ function ProductPage() {
           {/* Each product row contains info of 4 elements (on pc)*/}
           {currentProducts.map((product) => (
             <div key={product.id} className="productInfoContainer">
-              <div
-                className={`card-inner ${
-                  flippedCards.has(product.id) ? "flipped" : ""
-                }`}
-                onClick={() => toggleFlip(product.id)}
-              >
+              <div className="card-inner">
                 <div className="card-front">
                   <div className="productImageContainer">
                     <img
                       className="productImage"
                       alt="product"
                       src={product.link}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openModal(
+                          product.extraImages && product.extraImages.length > 0
+                            ? product.extraImages
+                            : [product.link],
+                          product.price.toString() || "",
+                          product.brandModel || "",
+                          product.measurement || "",
+                          product.size || ""
+                        );
+                      }}
                     />
                   </div>
                   <div className="productInfo">
                     <p className="productContent">{product.name}</p>
                     <p className="price">PHP {product.price}</p>
-                  </div>
-                </div>
-                <div className="card-back">
-                  <div className="productInfo">
-                    <p className="productContent">
-                      {product.type.toUpperCase()}
-                    </p>
-                    <p className="productContent">{product.size}</p>
                   </div>
                 </div>
               </div>
@@ -267,6 +308,16 @@ function ProductPage() {
         </div>
       </section>
       {renderPagination()}
+      {isModalOpen && (
+        <Modal
+          images={modalImages}
+          price={modalPrice}
+          brandModel={modalBrandModel}
+          measurement={modalMeasurement}
+          size={modalSizes}
+          onClose={closeModal}
+        />
+      )}
     </>
   );
 }

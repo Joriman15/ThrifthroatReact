@@ -18,26 +18,44 @@ type CartContextType = {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+const CART_EXPIRATION_MS = 2 * 60 * 60 * 1000; // 2 hour
+
+// Save with expiry
+const saveToLocalStorage = (key: string, value: any, ttl: number) => {
+  const data = {
+    value: value,
+    expiry: Date.now() + ttl,
+  };
+  localStorage.setItem(key, JSON.stringify(data));
+};
+
+// Load and check expiry
+const loadFromLocalStorage = (key: string) => {
+  const stored = localStorage.getItem(key);
+  if (!stored) return null;
+
+  try {
+    const parsed = JSON.parse(stored);
+    if (Date.now() > parsed.expiry) {
+      localStorage.removeItem(key);
+      return null;
+    }
+    return parsed.value;
+  } catch {
+    return null;
+  }
+};
+
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cartItem, setCartItem] = useState<Product[]>(() => {
-    const storedCart = localStorage.getItem("cartItems");
-    return storedCart ? JSON.parse(storedCart) : [];
+    return loadFromLocalStorage("cartItems") || [];
   });
 
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
-    const storedCart = localStorage.getItem("cartItems");
-    if (storedCart) {
-      const parsedCart = JSON.parse(storedCart);
-      setCartItem(parsedCart);
-      setCartCount(parsedCart.length);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItem));
     setCartCount(cartItem.length);
+    saveToLocalStorage("cartItems", cartItem, CART_EXPIRATION_MS);
   }, [cartItem]);
 
   const saveItem = (items: Product[]) => {

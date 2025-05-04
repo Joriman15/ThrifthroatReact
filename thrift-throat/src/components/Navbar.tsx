@@ -20,7 +20,7 @@ function Navbar() {
   const cartCount = cartItem.length;
 
   const [isCartModalOpen, setCartModalOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const showNavbar = () => {
     navRef.current?.classList.toggle("responsive_nav");
@@ -31,9 +31,9 @@ function Navbar() {
     setCartModalOpen(false);
   };
 
-  useEffect(() => {
-    setIsOpen(window.location.pathname === "/products");
-  }, []);
+  // useEffect(() => {
+  //   setIsOpen(window.location.pathname === "/products");
+  // }, [window.location.pathname]);
 
   return (
     <>
@@ -48,8 +48,7 @@ function Navbar() {
                 to="/"
                 className={({ isActive }) => (isActive ? "activeNav" : "")}
                 onClick={() => {
-                  setIsOpen(true);
-                  showNavbar(); 
+                  showNavbar();
                 }}
               >
                 Home
@@ -60,8 +59,7 @@ function Navbar() {
                 to="/products"
                 className={({ isActive }) => (isActive ? "activeNav" : "")}
                 onClick={() => {
-                  setIsOpen(true);
-                  showNavbar(); 
+                  showNavbar();
                 }}
               >
                 Products
@@ -72,8 +70,7 @@ function Navbar() {
                 to="/faq"
                 className={({ isActive }) => (isActive ? "activeNav" : "")}
                 onClick={() => {
-                  setIsOpen(true);
-                  showNavbar(); 
+                  showNavbar();
                 }}
               >
                 FAQs
