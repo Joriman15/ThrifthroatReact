@@ -1,7 +1,7 @@
 /* PWEDE TAYO MAGLAGAY DITO NG CONSTANT DESIGNS */
 :root{
   /* parang trip ko to na bg color sa website pero di muna ginagamit */
-  --bg-color: rgb(251, 242, 238);
+  --bg-color: rgb(216, 209, 207);
 }
 
 * {
@@ -381,9 +381,8 @@ footer {
 
 .modal-content {
   margin: auto;
-  display: block;
-  max-width: 80%;
-  max-height: 80%;
+  max-width: 90%;
+  border-radius: 30px;
 }
 
 .close {
@@ -446,15 +445,6 @@ footer {
 
 
 
-
-
-
-
-
-
-.mobile-only {
-  display: none;
-}
 
 
 
@@ -553,7 +543,6 @@ footer {
   color: #ccc;
   padding: 10px 0;
   height: 150px;
-  font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
   font-weight: 200;
   animation-name: zoom;
   animation-duration: 0.6s;
@@ -1110,25 +1099,6 @@ a{
   max-width: 90%;
 }
 
-.modal-nav.left {
-  left: 10px;
-}
-
-.modal-nav.right {
-  right: 10px;
-}
-
-
-
-
-
-
-
-.mobile-only {
-  display: block;
-}
-
-
 .modal-nav {
   position: absolute;
   top: 50%;
@@ -1142,11 +1112,12 @@ a{
 }
 
 .modal-nav.left {
-  left: 10px;
+  display: none;
+
 }
 
 .modal-nav.right {
-  right: 10px;
+  display: none;
 }
 
 
