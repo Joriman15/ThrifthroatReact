@@ -16,6 +16,7 @@ function CheckoutPage() {
     name: "",
     contact: "",
     email: "",
+    address: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,6 +27,8 @@ function CheckoutPage() {
     e.preventDefault();
     console.log("Submitted Info:", formData, cartItem);
     alert("Checkout submitted! We'll contact you soon.");
+    setFormData({ name: "", contact: "", email: "", address: "" });
+
     // Optionally send data to backend or email service here
   };
 
@@ -59,6 +62,16 @@ function CheckoutPage() {
             name="email"
             required
             value={formData.email}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Home Address:
+          <input
+            type="text"
+            name="address"
+            required
+            value={formData.address}
             onChange={handleChange}
           />
         </label>
