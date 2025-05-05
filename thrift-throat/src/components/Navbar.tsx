@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { useCart } from "../context/CartContext";
 
@@ -20,7 +20,7 @@ function Navbar() {
   const cartCount = cartItem.length;
 
   const [isCartModalOpen, setCartModalOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen] = useState(true);
 
   const showNavbar = () => {
     navRef.current?.classList.toggle("responsive_nav");
