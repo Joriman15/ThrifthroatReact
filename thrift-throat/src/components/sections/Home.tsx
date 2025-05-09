@@ -177,7 +177,7 @@ function Home() {
           </button>
 
           <img
-            className="modal-content"
+            className="modal-content-home"
             src={galleryImages[modalState.currentIndex].src}
             alt={galleryImages[modalState.currentIndex].alt}
           />
