@@ -16,7 +16,6 @@ function Navbar() {
   const navigate = useNavigate();
   const navRef = useRef<HTMLElement>(null);
   const { cartItem, removeItem } = useCart();
-  console.log("Cart contents:", cartItem);
   const cartCount = cartItem.length;
 
   const [isCartModalOpen, setCartModalOpen] = useState(false);

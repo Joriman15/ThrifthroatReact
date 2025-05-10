@@ -4,6 +4,18 @@ import { useEffect, useState } from "react";
 import { useCart } from "../../context/CartContext";
 import Modal from "../Modal";
 
+interface Product {
+  id: number;
+  link: string;
+  type: string;
+  name: string;
+  price: number;
+  size: string;
+  extraImages: string[];
+  measurement: string;
+  brandModel: string;
+}
+
 function ProductPage() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -12,7 +24,7 @@ function ProductPage() {
   const [currentFrom, setCurrentFrom] = useState("0");
   const [currentTo, setCurrentTo] = useState("5000");
   const [currentOrder, setCurrentOrder] = useState("ascending");
-  const [currentCategory, setCurrentCategory] = useState(["Cap"]);
+  const [currentCategory, setCurrentCategory] = useState<string[]>([]);
   const [modalImages, setModalImages] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMeasurement, setModalMeasurement] = useState("");
@@ -43,7 +55,7 @@ function ProductPage() {
 
   const [filteredProducts, setFilteredProducts] = useState<typeof products>([]);
 
-  const products = [
+  const products: Product[] = [
     {
       id: 1,
       link: "/images/cap1.jpg",
@@ -256,7 +268,7 @@ function ProductPage() {
     );
   };
 
-  const saveCartItems = (item: any) => {
+  const saveCartItems = (item: Product) => {
     saveItem([item]);
   };
 
