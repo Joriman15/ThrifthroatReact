@@ -10,6 +10,7 @@ type Product = {
   name: string;
   price: number;
   size: string;
+  measurement: string;
 };
 
 function Navbar() {
@@ -102,7 +103,7 @@ function Navbar() {
           <span className="close" onClick={() => setCartModalOpen(false)}>
             &times;
           </span>
-          <div className="modal-content">
+          <div className="modal-content-cart">
             {cartItem.length === 0 ? (
               <p>Your cart is empty.</p>
             ) : (
@@ -128,9 +129,11 @@ function Navbar() {
                       alt={product.name}
                       className="cart-img"
                     />
+                    <div className="cart-text">
                     <p>{product.name}</p>
                     <p>PHP {product.price}</p>
-                    <p>Size: {product.size}</p>
+                    <p>Measurement: {product.measurement}</p>
+                    </div>
                   </div>
                 ))}
                 <button className="checkout-btn" onClick={handleClick}>

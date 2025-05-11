@@ -176,27 +176,35 @@ function CheckoutPage() {
 
   return (
     <div className="checkout-container">
+      
       <form onSubmit={handleSubmit} className="checkout-form">
-        <label>
-          First Name:
-          <input
-            type="text"
-            name="fName"
-            required
-            value={formData.fName}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Last Name:
-          <input
-            type="text"
-            name="lName"
-            required
-            value={formData.lName}
-            onChange={handleChange}
-          />
-        </label>
+       
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="fName">First Name:</label>
+            <input
+              type="text"
+              id="fName"
+              name="fName"
+              required
+              value={formData.fName}
+              onChange={handleChange}
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="lName">Last Name:</label>
+            <input
+              type="text"
+              id="lName"
+              name="lName"
+              required
+              value={formData.lName}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        
         <label>
           Contact Number:
           <input
@@ -227,26 +235,31 @@ function CheckoutPage() {
             onChange={handleChange}
           />
         </label>
-        <label>
-          Postal Code:
-          <input
-            type="text"
-            name="pCode"
-            required
-            value={formData.pCode}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          City:
-          <input
-            type="text"
-            name="city"
-            required
-            value={formData.city}
-            onChange={handleChange}
-          />
-        </label>
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="city">City:</label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              required
+              value={formData.city}
+              onChange={handleChange}
+            />
+          </div>
+          
+          <div className="form-group">
+            <label htmlFor="pCode">Postal Code:</label>
+            <input
+              type="text"
+              id="pCode"
+              name="pCode"
+              required
+              value={formData.pCode}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
         <label>
           Province:
           <select
@@ -261,7 +274,11 @@ function CheckoutPage() {
             ))}
           </select>
         </label>
-
+        <button type="submit" className="submit-btn">
+          Submit
+        </button>
+      </form>
+       
         <div className="previewContainer">
           <ul>
             {cartItem.map((item: Product, index: number) => (
@@ -278,13 +295,13 @@ function CheckoutPage() {
               </li>
             ))}
           </ul>
-        </div>
-
-        <button type="submit" className="submit-btn">
-          Submit
-        </button>
-      </form>
+          </div>
+          
+        
     </div>
+      
+      
+   
   );
 }
 
