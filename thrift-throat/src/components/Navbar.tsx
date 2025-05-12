@@ -136,7 +136,11 @@ function Navbar() {
                     </div>
                   </div>
                 ))}
-                <button className="checkout-btn" onClick={handleClick}>
+                <button className="checkout-btn" onClick={() => {
+                  handleClick();
+                  showNavbar();
+                }}
+                >
                   Checkout
                 </button>
               </>

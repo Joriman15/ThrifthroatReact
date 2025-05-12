@@ -1149,6 +1149,9 @@ button[type="submit"]:hover {
    .previewContainer span {
     font-size: 18px;
   }
+
+
+
 }
 
 /*********************** RESPONSIVENESS ****************************/
@@ -1415,7 +1418,12 @@ button[type="submit"]:hover {
   }
 
   /*product page tysm chatgpt :* */
-
+  .categoryFilterContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+  }
   .mainContentProductPage {
     display: block;
     margin-bottom: 2rem;
@@ -1457,7 +1465,7 @@ button[type="submit"]:hover {
   }
 
   .productInfo {
-    font-size: 12px;
+    font-size: .8rem;
   }
 
   .productRow {

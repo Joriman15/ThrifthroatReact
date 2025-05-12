@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useCart } from "../../context/CartContext";
 import emailjs from "emailjs-com";
+import Swal from "sweetalert2";
+
+
 
 type Product = {
   id: number;
@@ -137,7 +140,13 @@ function CheckoutPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Submitted Info:", templateParams);
-    alert("Checkout submitted! We'll contact you soon.");
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Thank you! We'll email you shortly.",
+      showConfirmButton: false,
+      timer:3000
+    })
     setFormData({
       fName: "",
       lName: "",
