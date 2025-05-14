@@ -62,7 +62,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   }, [cartItem]);
 
   const saveItem = (items: Product[]) => {
-    setCartItem((prev) => [...prev, ...items]);
+    // Filter out products that are already in the cart by id
+    const newItems = items.filter(
+      (item) => !cartItem.some((cart) => cart.id === item.id)
+    );
+    setCartItem((prev) => [...prev, ...newItems]);
   };
 
   const removeItem = (id: number) => {
