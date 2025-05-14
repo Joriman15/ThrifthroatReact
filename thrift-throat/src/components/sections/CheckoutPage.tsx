@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useCart } from "../../context/CartContext";
 import emailjs from "emailjs-com";
 import Swal from "sweetalert2";
-
-
+import { useNavigate } from "react-router-dom";
 
 type Product = {
   id: number;
@@ -20,6 +19,11 @@ type Province = {
   province: string;
 };
 function CheckoutPage() {
+  const navigate = useNavigate();
+  const luzon = 54;
+  const visayas = 69; //to change
+  const mindanao = 74; //to change
+  const [shippingFee, setShippingFee] = useState("");
   const { cartItem } = useCart();
   const [formData, setFormData] = useState({
     fName: "",
@@ -29,93 +33,136 @@ function CheckoutPage() {
     address: "",
     pCode: "",
     city: "",
-    province: "Abra",
+    province: "",
   });
-
   const phProvinces = [
-    { province: "Abra" },
-    { province: "Agusan del Norte" },
-    { province: "Agusan del Sur" },
-    { province: "Aklan" },
-    { province: "Albay" },
-    { province: "Antique" },
-    { province: "Apayao" },
-    { province: "Aurora" },
-    { province: "Basilan" },
-    { province: "Bataan" },
-    { province: "Batanes" },
-    { province: "Batangas" },
-    { province: "Benguet" },
-    { province: "Biliran" },
-    { province: "Bohol" },
-    { province: "Bukidnon" },
-    { province: "Bulacan" },
-    { province: "Cagayan" },
-    { province: "Camarines Norte" },
-    { province: "Camarines Sur" },
-    { province: "Camiguin" },
-    { province: "Capiz" },
-    { province: "Catanduanes" },
-    { province: "Cavite" },
-    { province: "Cebu" },
-    { province: "Cotabato" },
-    { province: "Davao de Oro" },
-    { province: "Davao del Norte" },
-    { province: "Davao del Sur" },
-    { province: "Davao Occidental" },
-    { province: "Davao Oriental" },
-    { province: "Dinagat Islands" },
-    { province: "Eastern Samar" },
-    { province: "Guimaras" },
-    { province: "Ifugao" },
-    { province: "Ilocos Norte" },
-    { province: "Ilocos Sur" },
-    { province: "Iloilo" },
-    { province: "Isabela" },
-    { province: "Kalinga" },
-    { province: "La Union" },
-    { province: "Laguna" },
-    { province: "Lanao del Norte" },
-    { province: "Lanao del Sur" },
-    { province: "Leyte" },
-    { province: "Maguindanao del Norte" },
-    { province: "Maguindanao del Sur" },
-    { province: "Marinduque" },
-    { province: "Masbate" },
-    { province: "Misamis Occidental" },
-    { province: "Misamis Oriental" },
-    { province: "Mountain Province" },
-    { province: "Negros Occidental" },
-    { province: "Negros Oriental" },
-    { province: "Northern Samar" },
-    { province: "Nueva Ecija" },
-    { province: "Nueva Vizcaya" },
-    { province: "Occidental Mindoro" },
-    { province: "Oriental Mindoro" },
-    { province: "Palawan" },
-    { province: "Pampanga" },
-    { province: "Pangasinan" },
-    { province: "Quezon" },
-    { province: "Quirino" },
-    { province: "Rizal" },
-    { province: "Romblon" },
-    { province: "Samar" },
-    { province: "Sarangani" },
-    { province: "Siquijor" },
-    { province: "Sorsogon" },
-    { province: "South Cotabato" },
-    { province: "Southern Leyte" },
-    { province: "Sultan Kudarat" },
-    { province: "Sulu" },
-    { province: "Surigao del Norte" },
-    { province: "Surigao del Sur" },
-    { province: "Tarlac" },
-    { province: "Tawi-Tawi" },
-    { province: "Zambales" },
-    { province: "Zamboanga del Norte" },
-    { province: "Zamboanga del Sur" },
-    { province: "Zamboanga Sibugay" },
+    { province: "Abra", group: "luzon" },
+    { province: "Agusan del Norte", group: "mindanao" },
+    { province: "Agusan del Sur", group: "mindanao" },
+    { province: "Aklan", group: "visayas" },
+    { province: "Albay", group: "luzon" },
+    { province: "Antique", group: "visayas" },
+    { province: "Apayao", group: "luzon" },
+    { province: "Aurora", group: "luzon" },
+    { province: "Basilan", group: "mindanao" },
+    { province: "Bataan", group: "luzon" },
+    { province: "Batanes", group: "luzon" },
+    { province: "Batangas", group: "luzon" },
+    { province: "Benguet", group: "luzon" },
+    { province: "Biliran", group: "visayas" },
+    { province: "Bohol", group: "visayas" },
+    { province: "Bukidnon", group: "mindanao" },
+    { province: "Bulacan", group: "luzon" },
+    { province: "Cagayan", group: "luzon" },
+    { province: "Camarines Norte", group: "luzon" },
+    { province: "Camarines Sur", group: "luzon" },
+    { province: "Camiguin", group: "mindanao" },
+    { province: "Capiz", group: "visayas" },
+    { province: "Catanduanes", group: "luzon" },
+    { province: "Cavite", group: "luzon" },
+    { province: "Cebu", group: "visayas" },
+    { province: "Cotabato", group: "mindanao" },
+    { province: "Davao de Oro", group: "mindanao" },
+    { province: "Davao del Norte", group: "mindanao" },
+    { province: "Davao del Sur", group: "mindanao" },
+    { province: "Davao Occidental", group: "mindanao" },
+    { province: "Davao Oriental", group: "mindanao" },
+    { province: "Dinagat Islands", group: "mindanao" },
+    { province: "Eastern Samar", group: "visayas" },
+    { province: "Guimaras", group: "visayas" },
+    { province: "Ifugao", group: "luzon" },
+    { province: "Ilocos Norte", group: "luzon" },
+    { province: "Ilocos Sur", group: "luzon" },
+    { province: "Iloilo", group: "visayas" },
+    { province: "Isabela", group: "luzon" },
+    { province: "Kalinga", group: "luzon" },
+    { province: "La Union", group: "luzon" },
+    { province: "Laguna", group: "luzon" },
+    { province: "Lanao del Norte", group: "mindanao" },
+    { province: "Lanao del Sur", group: "mindanao" },
+    { province: "Leyte", group: "visayas" },
+    { province: "Maguindanao del Norte", group: "mindanao" },
+    { province: "Maguindanao del Sur", group: "mindanao" },
+    { province: "Marinduque", group: "luzon" },
+    { province: "Masbate", group: "luzon" },
+    { province: "Metro Manila", group: "luzon" },
+    { province: "Misamis Occidental", group: "mindanao" },
+    { province: "Misamis Oriental", group: "mindanao" },
+    { province: "Mountain Province", group: "luzon" },
+    { province: "Negros Occidental", group: "visayas" },
+    { province: "Negros Oriental", group: "visayas" },
+    { province: "Northern Samar", group: "visayas" },
+    { province: "Nueva Ecija", group: "luzon" },
+    { province: "Nueva Vizcaya", group: "luzon" },
+    { province: "Occidental Mindoro", group: "luzon" },
+    { province: "Oriental Mindoro", group: "luzon" },
+    { province: "Palawan", group: "luzon" },
+    { province: "Pampanga", group: "luzon" },
+    { province: "Pangasinan", group: "luzon" },
+    { province: "Quezon", group: "luzon" },
+    { province: "Quirino", group: "luzon" },
+    { province: "Rizal", group: "luzon" },
+    { province: "Romblon", group: "luzon" },
+    { province: "Samar", group: "visayas" },
+    { province: "Sarangani", group: "mindanao" },
+    { province: "Siquijor", group: "visayas" },
+    { province: "Sorsogon", group: "luzon" },
+    { province: "South Cotabato", group: "mindanao" },
+    { province: "Southern Leyte", group: "visayas" },
+    { province: "Sultan Kudarat", group: "mindanao" },
+    { province: "Sulu", group: "mindanao" },
+    { province: "Surigao del Norte", group: "mindanao" },
+    { province: "Surigao del Sur", group: "mindanao" },
+    { province: "Tarlac", group: "luzon" },
+    { province: "Tawi-Tawi", group: "mindanao" },
+    { province: "Zambales", group: "luzon" },
+    { province: "Zamboanga del Norte", group: "mindanao" },
+    { province: "Zamboanga del Sur", group: "mindanao" },
+    { province: "Zamboanga Sibugay", group: "mindanao" },
   ];
+  const getGroup = (province: string): string => {
+    let found = "";
+    phProvinces.map((item) => {
+      if (item.province == province) {
+        found = item.group;
+      }
+    });
+    console.log(found);
+    return found;
+  };
+  const calculateFee = (province: string) => {
+    if (cartItem.length >= 1 && cartItem.length <= 2) {
+      //small
+      if (getGroup(province) === "luzon")
+        setShippingFee(luzon.toFixed(2).toString());
+      else if (getGroup(province) === "visayas")
+        setShippingFee(visayas.toFixed(2).toString());
+      else if (getGroup(province) === "mindanao")
+        setShippingFee(mindanao.toFixed(2).toString());
+      else setShippingFee(""); // fallback if province not found
+    } else if (cartItem.length >= 3 && cartItem.length <= 5) {
+      //medium
+      if (getGroup(province) === "luzon")
+        setShippingFee((luzon + 21).toFixed(2).toString());
+      else if (getGroup(province) === "visayas")
+        setShippingFee((visayas + 21).toFixed(2).toString());
+      else if (getGroup(province) === "mindanao")
+        setShippingFee((mindanao + 21).toFixed(2).toString());
+      else setShippingFee("");
+    } else if (cartItem.length >= 6) {
+      //large
+      if (getGroup(province) === "luzon")
+        setShippingFee((luzon + 50).toFixed(2).toString());
+      else if (getGroup(province) === "visayas")
+        setShippingFee((visayas + 50).toFixed(2).toString());
+      else if (getGroup(province) === "mindanao")
+        setShippingFee((mindanao + 50).toFixed(2).toString());
+      else setShippingFee("");
+    } else {
+      setShippingFee("");
+    }
+  };
+
   const templateParams = {
     ...formData,
     cartItems: cartItem.map((item) => ({
@@ -125,9 +172,13 @@ function CheckoutPage() {
       measurement: item.measurement,
     })),
     cost: {
-      shipping: "0.00", // Change if you calculate it
-      tax: "0.00", // Change if needed
-      total: cartItem.reduce((acc, item) => acc + item.price, 0).toFixed(2),
+      subTotal: cartItem.reduce((acc, item) => acc + item.price, 0).toFixed(2),
+      shipping: shippingFee,
+      total: (
+        cartItem.reduce((acc, item) => acc + item.price, 0) +
+          parseInt(shippingFee) ||
+        cartItem.reduce((acc, item) => acc + item.price, 0)
+      ).toFixed(2),
     },
     order_id: `#${Date.now()}`,
   };
@@ -145,8 +196,32 @@ function CheckoutPage() {
       icon: "success",
       title: "Thank you! We'll email you shortly.",
       showConfirmButton: false,
-      timer:3000
-    })
+      timer: 3000,
+    });
+
+    // send data to backend or email service here
+    emailjs
+      .send(
+        "service_rcdsnpj",
+        "template_pn7fe5u",
+        templateParams,
+        "6GD3-i3vkdJarmApx"
+      )
+      .then(
+        () => console.log("Order confirmed. Email sent to customer!"),
+        () => console.log("Payment successful, but email failed.")
+      );
+    emailjs
+      .send(
+        "service_rcdsnpj",
+        "template_er69omt",
+        templateParams,
+        "6GD3-i3vkdJarmApx"
+      )
+      .then(
+        () => console.log("Order confirmed. Email sent to Thrifthroat!"),
+        () => console.log("Payment successful, but email failed.")
+      );
     setFormData({
       fName: "",
       lName: "",
@@ -157,37 +232,19 @@ function CheckoutPage() {
       city: "",
       province: "",
     });
-
-    // Optionally send data to backend or email service here
-    emailjs
-      .send(
-        "service_rcdsnpj",
-        "template_pn7fe5u",
-        templateParams,
-        "6GD3-i3vkdJarmApx"
-      )
-      .then(
-        () => alert("Order confirmed. Email sent!"),
-        () => alert("Payment successful, but email failed.")
-      );
-    emailjs
-      .send(
-        "service_rcdsnpj",
-        "template_er69omt",
-        templateParams,
-        "6GD3-i3vkdJarmApx"
-      )
-      .then(
-        () => alert("Order confirmed. Email sent!"),
-        () => alert("Payment successful, but email failed.")
-      );
+    localStorage.setItem("cartItems", "");
+    navigate("/payment");
   };
-
+  const handleProvinceChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    calculateFee(e.target.value);
+    console.log(shippingFee);
+  };
   return (
     <div className="checkout-container">
-      
       <form onSubmit={handleSubmit} className="checkout-form">
-       
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="fName">First Name:</label>
@@ -200,7 +257,7 @@ function CheckoutPage() {
               onChange={handleChange}
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="lName">Last Name:</label>
             <input
@@ -213,7 +270,7 @@ function CheckoutPage() {
             />
           </div>
         </div>
-        
+
         <label>
           Contact Number:
           <input
@@ -256,7 +313,7 @@ function CheckoutPage() {
               onChange={handleChange}
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="pCode">Postal Code:</label>
             <input
@@ -271,46 +328,54 @@ function CheckoutPage() {
         </div>
         <label>
           Province:
-          <select
+          <input
+            type="text"
             name="province"
             value={formData.province}
-            onChange={handleChange}
-          >
+            onChange={handleProvinceChange}
+            list="provinceList"
+            autoComplete="off"
+            required
+          />
+          <datalist id="provinceList">
             {phProvinces.map((selection: Province, idx) => (
-              <option key={idx} value={selection.province}>
-                {selection.province}
-              </option>
+              <option key={idx} value={selection.province} />
             ))}
-          </select>
+          </datalist>
         </label>
         <button type="submit" className="submit-btn">
           Submit
         </button>
       </form>
-       
-        <div className="previewContainer">
-          <ul>
-            {cartItem.map((item: Product, index: number) => (
-              <li className="productItem" key={index}>
-                <img
-                  className="productPreview"
-                  src={item.link}
-                  alt={item.name}
-                />
-                <span>
-                  <strong>{item.name}</strong> (Size: {item.size}) – PHP{" "}
-                  {item.price}
-                </span>
-              </li>
-            ))}
-          </ul>
+
+      <div className="previewContainer">
+        <ul>
+          {cartItem.map((item: Product, index: number) => (
+            <li className="productItem" key={index}>
+              <img className="productPreview" src={item.link} alt={item.name} />
+              <span>
+                <strong>{item.name}</strong> (Size: {item.size}) – PHP{" "}
+                {item.price}
+              </span>
+            </li>
+          ))}
+        </ul>
+        <div className="costSummary">
+          <div className="subTotalContainer">
+            <h3 className="subTotalLabel">Subtotal</h3>
+            <p className="subTotal">{templateParams.cost.subTotal}</p>
           </div>
-          
-        
+          <div className="shippingcontainer">
+            <h3 className="shippingLabel">Shipping</h3>
+            <p className="shippingFee">{shippingFee}</p>
+          </div>
+          <div className="totalContainer">
+            <h3 className="totalLabel">Total</h3>
+            <p className="totalFee">{templateParams.cost.total}</p>
+          </div>
+        </div>
+      </div>
     </div>
-      
-      
-   
   );
 }
 

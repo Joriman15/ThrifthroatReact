@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
 import LoadingPage from "./components/LoadingPage";
 import CheckoutPage from "./components/sections/CheckoutPage";
+import PaymentPage from "./components/sections/PaymentPage";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -33,6 +34,7 @@ function App() {
           <Route path="/products" element={<ProductPage />} />
           <Route path="/faq" element={<FaqsPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
         </Routes>
         <Footer />
       </div>
