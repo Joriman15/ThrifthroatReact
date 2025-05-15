@@ -5,7 +5,7 @@ function Gcash() {
         <p>*GCASH TRANSFER</p>
         <br></br>
         <div className="gcashName">
-          <p>HURLEY VALEN SALIG</p>
+          <p>H***** V***** S*****</p>
         </div>
         <div className="gcashNumber">
           <p>+63 956 150 1404</p>

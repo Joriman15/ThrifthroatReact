@@ -18,6 +18,7 @@ type Product = {
 type Province = {
   province: string;
 };
+
 function CheckoutPage() {
   const navigate = useNavigate();
   const luzon = 54;
@@ -232,6 +233,7 @@ function CheckoutPage() {
       city: "",
       province: "",
     });
+    localStorage.setItem("totalPrice", templateParams.cost.total);
     localStorage.setItem("cartItems", "");
     navigate("/payment");
   };
@@ -242,6 +244,7 @@ function CheckoutPage() {
     calculateFee(e.target.value);
     console.log(shippingFee);
   };
+
   return (
     <div className="checkout-container">
       <form onSubmit={handleSubmit} className="checkout-form">

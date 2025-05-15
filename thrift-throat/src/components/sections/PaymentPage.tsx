@@ -1,22 +1,29 @@
 import Gcash from "../Gcash";
+import { useEffect, useState } from "react";
 
 function PaymentPage() {
+  const [totalPrice, setTotalPrice] = useState("");
+  useEffect(() => {
+    setTotalPrice(localStorage.getItem(totalPrice) || "");
+  }, []);
+
   return (
     <>
       <div className="paymentContainer">
-        <p>Your order is confirmed</p>
-        <br></br>
+        <p className="confirmTitle">Thank you! Your order is confirmed!</p>
+        <p className="paymentEmail">
+          <strong> *Important* </strong>
+          E-mail us a photo/screenshot at <strong>
+            sales@thrifthroat.com
+          </strong>{" "}
+          within 24 HOURS for us to proceed with the shipment of your order.
+          {totalPrice}
+        </p>
         <div className="paymentDetails">
           <p className="paymentLabel">PAYMENT DETAILS:</p>
-          <br></br>
           <Gcash />
         </div>
       </div>
-      <br></br>
-      <p>
-        *Kindly e-mail us a photo/screenshot at sales@thrifthroat.com within 24
-        HOURS for us to proceed with the shipment of your order.
-      </p>
     </>
   );
 }
