@@ -63,9 +63,9 @@ function ProductPage() {
       name: "Ralph Lauren",
       price: 600,
       size: "MEDIUM",
-      extraImages: ["/images/cap1.jpg", "/images/cap2.jpg"],
+      extraImages: ["/images/cap1.jpg", "/images/cap2.jpg", "/images/cap4.jpg"],
       measurement: "malaki",
-      brandModel: "lacost",
+      brandModel: "Lascoste",
     },
     {
       id: 2,
@@ -76,7 +76,7 @@ function ProductPage() {
       size: "MEDIUM",
       extraImages: [""],
       measurement: "malaki",
-      brandModel: "lacost",
+      brandModel: "Lascoste",
     },
     {
       id: 3,
@@ -87,7 +87,7 @@ function ProductPage() {
       size: "MEDIUM",
       extraImages: [""],
       measurement: "malaki",
-      brandModel: "lacost",
+      brandModel: "Lascoste",
     },
     {
       id: 4,
@@ -98,7 +98,7 @@ function ProductPage() {
       size: "MEDIUM",
       extraImages: [""],
       measurement: "malaki",
-      brandModel: "lacost",
+      brandModel: "Lascoste",
     },
     {
       id: 5,
@@ -109,7 +109,7 @@ function ProductPage() {
       size: "MEDIUM",
       extraImages: [""],
       measurement: "malaki",
-      brandModel: "lacost",
+      brandModel: "Lascoste",
     },
     {
       id: 6,
@@ -120,7 +120,7 @@ function ProductPage() {
       size: "MEDIUM",
       extraImages: [""],
       measurement: "22x27.5",
-      brandModel: "lacost",
+      brandModel: "Lascoste",
     },
     {
       id: 7,
@@ -131,7 +131,7 @@ function ProductPage() {
       size: "MEDIUM",
       extraImages: [""],
       measurement: "21.5x27.5",
-      brandModel: "lacost",
+      brandModel: "Lascoste",
     },
     {
       id: 8,
@@ -142,7 +142,7 @@ function ProductPage() {
       size: "MEDIUM",
       extraImages: [""],
       measurement: "26x30",
-      brandModel: "lacost",
+      brandModel: "Lascoste",
     },
     {
       id: 9,
@@ -153,7 +153,7 @@ function ProductPage() {
       size: "MEDIUM",
       extraImages: [""],
       measurement: "20x25.5",
-      brandModel: "lacost",
+      brandModel: "Lascoste",
     },
     {
       id: 10,
@@ -164,7 +164,7 @@ function ProductPage() {
       size: "MEDIUM",
       extraImages: [""],
       measurement: "26x29",
-      brandModel: "lacost",
+      brandModel: "Lascoste",
     },
     {
       id: 11,
@@ -175,7 +175,7 @@ function ProductPage() {
       size: "MEDIUM",
       extraImages: [""],
       measurement: "25x30",
-      brandModel: "lacost",
+      brandModel: "Lascoste",
     },
     {
       id: 12,
@@ -186,7 +186,40 @@ function ProductPage() {
       size: "MEDIUM",
       extraImages: [""],
       measurement: "25x34",
-      brandModel: "lacost",
+      brandModel: "Lascoste",
+    },
+    {
+      id: 13,
+      link: "/images/long1.jpg",
+      type: "shirt",
+      name: "Rip n Dip",
+      price: 650,
+      size: "MEDIUM",
+      extraImages: [""],
+      measurement: "24x31",
+      brandModel: "RipnDip",
+    },
+    {
+      id: 14,
+      link: "/images/ll2.jpg",
+      type: "jacket",
+      name: "Nike Vintage Jacket",
+      price: 800,
+      size: "LARGE",
+      extraImages: [""],
+      measurement: "25x34",
+      brandModel: "NIKE",
+    },
+    {
+      id: 15,
+      link: "/images/long2.jpg",
+      type: "long sleeve",
+      name: "Nike Vintage Jacket",
+      price: 800,
+      size: "LARGE",
+      extraImages: [""],
+      measurement: "25x34",
+      brandModel: "NIKE",
     },
   ];
 

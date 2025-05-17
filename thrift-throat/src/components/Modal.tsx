@@ -36,22 +36,23 @@ const Modal: React.FC<ModalProps> = ({
           ✖
         </button>
         <div className="modal-body">
-          <button className="modal-arrow left" onClick={goLeft}>
-            {"<"}
-          </button>
+          <div className="modal-image-section">
+            <button className="modal-arrow left" onClick={goLeft}>
+              {"<"}
+            </button>
 
-          <div className="modal-image-wrapper">
-            <img
-              src={images[currentIndex]}
-              alt="Product view"
-              className="modal-image"
-            />
+            <div className="modal-image-wrapper">
+              <img
+                src={images[currentIndex]}
+                alt="Product view"
+                className="modal-image"
+              />
+            </div>
+
+            <button className="modal-arrow right" onClick={goRight}>
+              {">"}
+            </button>
           </div>
-
-          <button className="modal-arrow right" onClick={goRight}>
-            {">"}
-          </button>
-
           <div className="modal-description">
             <h3>Price:</h3> <p>{price || "No price available"}</p>
             <h3>Brand/Model</h3>{" "}
