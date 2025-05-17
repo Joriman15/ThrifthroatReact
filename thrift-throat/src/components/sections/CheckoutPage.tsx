@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useCart } from "../../context/CartContext";
 import emailjs from "emailjs-com";
 import Swal from "sweetalert2";
+import ReCAPTCHA from "react-google-recaptcha";
 import { useNavigate } from "react-router-dom";
 
 type Product = {
@@ -15,9 +16,9 @@ type Product = {
   measurement: string;
   brandModel: string;
 };
-type Province = {
-  province: string;
-};
+// type Province = {
+//   province: string;
+// };
 
 function CheckoutPage() {
   const navigate = useNavigate();
@@ -164,13 +165,14 @@ function CheckoutPage() {
     }
   };
 
+  const sanitizeInput = (str: string) => str.replace(/<[^>]*>?/gm, "").trim();
   const templateParams = {
     ...formData,
     cartItems: cartItem.map((item) => ({
-      name: item.name,
-      image_url: item.link,
-      price: item.price.toFixed(2),
-      measurement: item.measurement,
+      name: sanitizeInput(item.name),
+      image_url: sanitizeInput(item.link),
+      price: parseFloat(item.price.toFixed(2)),
+      measurement: sanitizeInput(item.measurement),
     })),
     cost: {
       subTotal: cartItem.reduce((acc, item) => acc + item.price, 0).toFixed(2),
@@ -188,9 +190,20 @@ function CheckoutPage() {
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!captchaToken) {
+      Swal.fire({
+        icon: "error",
+        title: "Please verify you're not a robot.",
+        confirmButtonText: "Okay",
+      });
+      return;
+    }
+
     console.log("Submitted Info:", templateParams);
     Swal.fire({
       position: "center",
@@ -203,10 +216,11 @@ function CheckoutPage() {
     // send data to backend or email service here
     emailjs
       .send(
-        "service_rcdsnpj",
-        "template_pn7fe5u",
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env
+          .VITE_EMAILJS_TEMPLATE_ID1 /*for customer template_pn7fe5u*/,
         templateParams,
-        "6GD3-i3vkdJarmApx"
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
       .then(
         () => console.log("Order confirmed. Email sent to customer!"),
@@ -214,10 +228,11 @@ function CheckoutPage() {
       );
     emailjs
       .send(
-        "service_rcdsnpj",
-        "template_er69omt",
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env
+          .VITE_EMAILJS_TEMPLATE_ID2 /*for thrifthroat template_er69omt*/,
         templateParams,
-        "6GD3-i3vkdJarmApx"
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
       .then(
         () => console.log("Order confirmed. Email sent to Thrifthroat!"),
@@ -244,6 +259,7 @@ function CheckoutPage() {
     calculateFee(e.target.value);
     console.log(shippingFee);
   };
+  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
   return (
     <div className="checkout-container">
@@ -279,6 +295,8 @@ function CheckoutPage() {
           <input
             type="tel"
             name="contact"
+            pattern="^(09|\+639)\d{9}$"
+            title="Enter a valid PH number (09XXXXXXXXX or +639XXXXXXXXX)"
             required
             value={formData.contact}
             onChange={handleChange}
@@ -295,7 +313,7 @@ function CheckoutPage() {
           />
         </label>
         <label>
-          Home Address:
+          Full Address:
           <input
             type="text"
             name="address"
@@ -323,6 +341,8 @@ function CheckoutPage() {
               type="text"
               id="pCode"
               name="pCode"
+              pattern="^\d{4}$"
+              title="4-digit postal code"
               required
               value={formData.pCode}
               onChange={handleChange}
@@ -331,21 +351,21 @@ function CheckoutPage() {
         </div>
         <label>
           Province:
-          <input
-            type="text"
-            name="province"
-            value={formData.province}
-            onChange={handleProvinceChange}
-            list="provinceList"
-            autoComplete="off"
-            required
-          />
-          <datalist id="provinceList">
-            {phProvinces.map((selection: Province, idx) => (
-              <option key={idx} value={selection.province} />
+          <select name="province" onChange={handleProvinceChange} required>
+            <option value="">Select Province</option>
+            {phProvinces.map((p, idx) => (
+              <option key={idx} value={p.province}>
+                {p.province}
+              </option>
             ))}
-          </datalist>
+          </select>
         </label>
+        <ReCAPTCHA
+          sitekey={siteKey}
+          onChange={(token) => setCaptchaToken(token)}
+          theme="light"
+        />
+
         <button type="submit" className="submit-btn">
           Submit
         </button>
