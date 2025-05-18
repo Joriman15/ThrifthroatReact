@@ -130,16 +130,18 @@ function Navbar() {
                       className="cart-img"
                     />
                     <div className="cart-text">
-                    <p>{product.name}</p>
-                    <p>PHP {product.price}</p>
-                    <p>Measurement: {product.measurement}</p>
+                      <p>{product.name}</p>
+                      <p>PHP {product.price}</p>
+                      <p>Measurement: {product.measurement}</p>
                     </div>
                   </div>
                 ))}
-                <button className="checkout-btn" onClick={() => {
-                  handleClick();
-                  showNavbar();
-                }}
+                <button
+                  className="checkout-btn"
+                  onClick={() => {
+                    handleClick();
+                    showNavbar();
+                  }}
                 >
                   Checkout
                 </button>
