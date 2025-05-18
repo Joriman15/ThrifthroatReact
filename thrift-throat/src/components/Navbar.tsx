@@ -39,7 +39,7 @@ function Navbar() {
     <>
       <header className="header-container">
         <div className="logo">
-          <img src="../src/assets/images/logo2.png" width="50px" />
+          <img src="/images/logo2.png" width="50px" />
         </div>
         <nav ref={navRef}>
           <ul className="nav-links">
