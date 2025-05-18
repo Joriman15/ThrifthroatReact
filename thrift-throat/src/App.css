@@ -48,7 +48,7 @@
   left: 0;
   top: 0;
   animation: rotation 2s ease-in-out infinite alternate;
-  background: url("../src/assets/images/logo2.png") center/cover;
+  background: url("/images/logo2.png") center/cover;
 }
 .loading::after {
   margin: -48px;
