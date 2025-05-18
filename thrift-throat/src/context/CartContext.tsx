@@ -17,6 +17,8 @@ type CartContextType = {
   cartCount: number;
   saveItem: (items: Product[]) => void;
   removeItem: (id: number) => void;
+  removeAll: () => void;
+  onHold: Product[];
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -56,10 +58,17 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [cartCount, setCartCount] = useState(0);
 
+  const [onHold, setOnHold] = useState<Product[]>(() => {
+    return loadFromLocalStorage("onHold") || [];
+  });
   useEffect(() => {
     setCartCount(cartItem.length);
     saveToLocalStorage("cartItems", cartItem, CART_EXPIRATION_MS);
   }, [cartItem]);
+
+  useEffect(() => {
+    saveToLocalStorage("onHold", onHold, CART_EXPIRATION_MS);
+  }, [onHold]);
 
   const saveItem = (items: Product[]) => {
     // Filter out products that are already in the cart by id
@@ -74,8 +83,16 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     setCartItem(updatedCart);
   };
 
+  const removeAll = () => {
+    setOnHold(cartItem);
+
+    setCartItem([]);
+  };
+
   return (
-    <CartContext.Provider value={{ cartItem, cartCount, saveItem, removeItem }}>
+    <CartContext.Provider
+      value={{ cartItem, cartCount, saveItem, removeItem, removeAll, onHold }}
+    >
       {children}
     </CartContext.Provider>
   );

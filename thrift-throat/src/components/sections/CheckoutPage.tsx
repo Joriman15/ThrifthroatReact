@@ -25,7 +25,7 @@ function CheckoutPage() {
   const visayas = 69; //to change
   const mindanao = 74; //to change
   const [shippingFee, setShippingFee] = useState("");
-  const { cartItem } = useCart();
+  const { removeAll, cartItem } = useCart();
   const [formData, setFormData] = useState({
     fName: "",
     lName: "",
@@ -235,6 +235,8 @@ function CheckoutPage() {
     });
     localStorage.setItem("totalPrice", templateParams.cost.total);
     localStorage.setItem("cartItems", "");
+    removeAll();
+
     navigate("/payment");
   };
   const handleProvinceChange = (

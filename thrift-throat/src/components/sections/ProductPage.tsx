@@ -19,7 +19,7 @@ interface Product {
 function ProductPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { saveItem } = useCart();
+  const { onHold, saveItem } = useCart();
   const productsPerPage = 8; // Number of products per page
   const [currentFrom, setCurrentFrom] = useState("0");
   const [currentTo, setCurrentTo] = useState("5000");
@@ -31,7 +31,6 @@ function ProductPage() {
   const [modalPrice, setModalPrice] = useState("");
   const [modalBrandModel, setModalBrandModel] = useState("");
   const [modalSizes, setModalSizes] = useState("");
-
   const openModal = (
     images: string[],
     price: string,
@@ -305,51 +304,105 @@ function ProductPage() {
     saveItem([item]);
   };
 
+  const isProductOnHold = (product: Product) => {
+    return onHold?.some((p) => p.id === product.id) ?? false;
+  };
+
   return (
     <>
       <section className="mainContentProductPage">
         <Filter></Filter>
         <div className="productRow">
           {/* Each product row contains info of 4 elements (on pc)*/}
-          {currentProducts.map((product) => (
-            <div key={product.id} className="productInfoContainer">
-              <div className="card-inner">
-                <div className="card-front">
-                  <div className="productImageContainer">
-                    <img
-                      className="productImage"
-                      alt="product"
-                      src={product.link}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openModal(
-                          product.extraImages && product.extraImages.length > 0
-                            ? product.extraImages
-                            : [product.link],
-                          product.price.toString() || "",
-                          product.brandModel || "",
-                          product.measurement || "",
-                          product.size || ""
-                        );
-                      }}
-                    />
-                  </div>
-                  <div className="productInfo">
-                    <p className="productContent">{product.name}</p>
-                    <p className="price">PHP {product.price}</p>
+          {currentProducts.map((product) => {
+            const onHoldStatus = isProductOnHold(product);
+            return (
+              <div
+                key={product.id}
+                className="productInfoContainer"
+                style={
+                  onHoldStatus
+                    ? { position: "relative", filter: "brightness(0.5)" }
+                    : {}
+                }
+              >
+                <div className="card-inner">
+                  <div className="card-front">
+                    <div
+                      className="productImageContainer"
+                      style={{ position: "relative" }}
+                    >
+                      <img
+                        className="productImage"
+                        alt="product"
+                        src={product.link}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openModal(
+                            product.extraImages &&
+                              product.extraImages.length > 0
+                              ? product.extraImages
+                              : [product.link],
+                            product.price.toString() || "",
+                            product.brandModel || "",
+                            product.measurement || "",
+                            product.size || ""
+                          );
+                        }}
+                        style={onHoldStatus ? { pointerEvents: "none" } : {}}
+                      />
+                      {onHoldStatus && (
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%",
+                            background: "rgba(0,0,0,0.5)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            zIndex: 2,
+                          }}
+                        >
+                          <span
+                            style={{
+                              color: "#fff",
+                              fontSize: "3rem",
+                              fontWeight: "bold",
+                              background: "rgba(0,0,0,0.7)",
+                              borderRadius: "50%",
+                              width: "60px",
+                              height: "60px",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            ×
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="productInfo">
+                      <p className="productContent">{product.name}</p>
+                      <p className="price">PHP {product.price}</p>
+                    </div>
                   </div>
                 </div>
+                <div className="buttonContainer">
+                  <button
+                    className="addCart"
+                    onClick={() => saveCartItems(product)}
+                    disabled={onHoldStatus}
+                  >
+                    {onHoldStatus ? "ON HOLD" : "ADD TO CART"}
+                  </button>
+                </div>
               </div>
-              <div className="buttonContainer">
-                <button
-                  className="addCart"
-                  onClick={() => saveCartItems(product)}
-                >
-                  ADD TO CART
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
       {renderPagination()}
