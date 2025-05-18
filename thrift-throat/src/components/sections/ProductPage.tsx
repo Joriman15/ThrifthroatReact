@@ -1,26 +1,60 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import Filter from "../Filter";
 import { useEffect, useState } from "react";
+import { useCart } from "../../context/CartContext";
+import Modal from "../Modal";
+
+interface Product {
+  id: number;
+  link: string;
+  type: string;
+  name: string;
+  price: number;
+  size: string;
+  extraImages: string[];
+  measurement: string;
+  brandModel: string;
+}
 
 function ProductPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { onHold, saveItem } = useCart();
   const productsPerPage = 8; // Number of products per page
   const [currentFrom, setCurrentFrom] = useState("0");
   const [currentTo, setCurrentTo] = useState("5000");
   const [currentOrder, setCurrentOrder] = useState("ascending");
-  const [currentCategory, setCurrentCategory] = useState(["Cap"]);
-  const [filteredProducts, setFilteredProducts] = useState([
-    {
-      id: 1,
-      link: "",
-      type: "",
-      name: "",
-      price: 0,
-      size: "",
-    },
-  ]);
-  const products = [
+  const [currentCategory, setCurrentCategory] = useState<string[]>([]);
+  const [modalImages, setModalImages] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMeasurement, setModalMeasurement] = useState("");
+  const [modalPrice, setModalPrice] = useState("");
+  const [modalBrandModel, setModalBrandModel] = useState("");
+  const [modalSizes, setModalSizes] = useState("");
+  const openModal = (
+    images: string[],
+    price: string,
+    brandModel: string,
+    measurement: string,
+    sizes: string
+  ) => {
+    const imagesToShow = images.length > 0 && images[0] !== "" ? images : [];
+    setModalImages(imagesToShow);
+    setModalMeasurement(measurement);
+    setModalBrandModel(brandModel);
+    setModalPrice(price);
+    setModalSizes(sizes);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalImages([]);
+  };
+
+  const [filteredProducts, setFilteredProducts] = useState<typeof products>([]);
+
+  const products: Product[] = [
     {
       id: 1,
       link: "/images/cap1.jpg",
@@ -28,6 +62,9 @@ function ProductPage() {
       name: "Ralph Lauren",
       price: 600,
       size: "MEDIUM",
+      extraImages: ["/images/cap1.jpg", "/images/cap2.jpg", "/images/cap4.jpg"],
+      measurement: "malaki",
+      brandModel: "Lascoste",
     },
     {
       id: 2,
@@ -36,6 +73,9 @@ function ProductPage() {
       name: "Vintage Disney",
       price: 400,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "malaki",
+      brandModel: "Lascoste",
     },
     {
       id: 3,
@@ -44,6 +84,9 @@ function ProductPage() {
       name: "Vintage Vans",
       price: 500,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "malaki",
+      brandModel: "Lascoste",
     },
     {
       id: 4,
@@ -52,6 +95,9 @@ function ProductPage() {
       name: "Thrasher Dad Hat",
       price: 650,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "malaki",
+      brandModel: "Lascoste",
     },
     {
       id: 5,
@@ -60,62 +106,119 @@ function ProductPage() {
       name: "New Era C.",
       price: 500,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "malaki",
+      brandModel: "Lascoste",
     },
     {
       id: 6,
       link: "/images/jacket3.jpg",
       type: "jacket",
-      name: "Nike 22x27.5",
+      name: "Nike ",
       price: 600,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "22x27.5",
+      brandModel: "Lascoste",
     },
     {
       id: 7,
       link: "/images/jacket2.jpg",
       type: "jacket",
-      name: "Adidas 21.5x27.5",
+      name: "Adidas ",
       price: 550,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "21.5x27.5",
+      brandModel: "Lascoste",
     },
     {
       id: 8,
       link: "/images/jack2.jpg",
       type: "jacket",
-      name: "Marlboro 26x30",
+      name: "Marlboro ",
       price: 800,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "26x30",
+      brandModel: "Lascoste",
     },
     {
       id: 9,
       link: "/images/jacket4.jpg",
       type: "jacket",
-      name: "Champion 20x25.5",
+      name: "Champion ",
       price: 600,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "20x25.5",
+      brandModel: "Lascoste",
     },
     {
       id: 10,
       link: "/images/jack1.jpg",
       type: "jacket",
-      name: "Nike 26x29",
+      name: "Nike ",
       price: 1000,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "26x29",
+      brandModel: "Lascoste",
     },
     {
       id: 11,
       link: "/images/jack3.jpg",
       type: "jacket",
-      name: "Bapesta 25x30",
+      name: "Bapesta ",
       price: 600,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "25x30",
+      brandModel: "Lascoste",
     },
     {
       id: 12,
       link: "/images/ll1.jpg",
       type: "shirt",
-      name: "The Mountain 25x34",
+      name: "The Mountain ",
       price: 600,
       size: "MEDIUM",
+      extraImages: [""],
+      measurement: "25x34",
+      brandModel: "Lascoste",
+    },
+    {
+      id: 13,
+      link: "/images/long1.jpg",
+      type: "shirt",
+      name: "Rip n Dip",
+      price: 650,
+      size: "MEDIUM",
+      extraImages: [""],
+      measurement: "24x31",
+      brandModel: "RipnDip",
+    },
+    {
+      id: 14,
+      link: "/images/ll2.jpg",
+      type: "jacket",
+      name: "Nike Vintage Jacket",
+      price: 800,
+      size: "LARGE",
+      extraImages: [""],
+      measurement: "25x34",
+      brandModel: "NIKE",
+    },
+    {
+      id: 15,
+      link: "/images/long2.jpg",
+      type: "long sleeve",
+      name: "Nike Vintage Jacket",
+      price: 800,
+      size: "LARGE",
+      extraImages: [""],
+      measurement: "25x34",
+      brandModel: "NIKE",
     },
   ];
 
@@ -176,7 +279,6 @@ function ProductPage() {
     // Update URL with new page number without changing component
     if (currentPage != parseInt(params.get("page") || "1", 10)) {
       window.scrollTo({ top: 120, behavior: "smooth" });
-      console.log("params=", params);
       navigate(`/products?${params}`);
     }
   };
@@ -198,44 +300,122 @@ function ProductPage() {
     );
   };
 
+  const saveCartItems = (item: Product) => {
+    saveItem([item]);
+  };
+
+  const isProductOnHold = (product: Product) => {
+    return onHold?.some((p) => p.id === product.id) ?? false;
+  };
+
   return (
     <>
       <section className="mainContentProductPage">
         <Filter></Filter>
         <div className="productRow">
           {/* Each product row contains info of 4 elements (on pc)*/}
-          {currentProducts.map((product) => (
-            <div key={product.id} className="productInfoContainer">
-              <div className="card-inner">
-                <div className="card-front">
-                  <div className="productImageContainer">
-                    <img
-                      className="productImage"
-                      alt="product"
-                      src={product.link}
-                    />
-                  </div>
-                  <div className="productInfo">
-                    <p className="productContent">{product.name}</p>
-                    <p className="price">PHP {product.price}</p>
+          {currentProducts.map((product) => {
+            const onHoldStatus = isProductOnHold(product);
+            return (
+              <div
+                key={product.id}
+                className="productInfoContainer"
+                style={
+                  onHoldStatus
+                    ? { position: "relative", filter: "brightness(0.5)" }
+                    : {}
+                }
+              >
+                <div className="card-inner">
+                  <div className="card-front">
+                    <div
+                      className="productImageContainer"
+                      style={{ position: "relative" }}
+                    >
+                      <img
+                        className="productImage"
+                        alt="product"
+                        src={product.link}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openModal(
+                            product.extraImages &&
+                              product.extraImages.length > 0
+                              ? product.extraImages
+                              : [product.link],
+                            product.price.toString() || "",
+                            product.brandModel || "",
+                            product.measurement || "",
+                            product.size || ""
+                          );
+                        }}
+                        style={onHoldStatus ? { pointerEvents: "none" } : {}}
+                      />
+                      {onHoldStatus && (
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%",
+                            background: "rgba(0,0,0,0.5)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            zIndex: 2,
+                          }}
+                        >
+                          <span
+                            style={{
+                              color: "#fff",
+                              fontSize: "3rem",
+                              fontWeight: "bold",
+                              background: "rgba(0,0,0,0.7)",
+                              borderRadius: "50%",
+                              width: "60px",
+                              height: "60px",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            ×
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="productInfo">
+                      <p className="productContent">{product.name}</p>
+                      <p className="price">PHP {product.price}</p>
+                    </div>
                   </div>
                 </div>
-                <div className="card-back">
-                  <div className="productInfo">
-                    <p className="productContent">
-                      {product.type.toUpperCase()}
-                    </p>
-                    <p className="productContent">{product.size}</p>
-                  </div>
+                <div className="buttonContainer">
+                  <button
+                    className="addCart"
+                    onClick={() => saveCartItems(product)}
+                    disabled={onHoldStatus}
+                  >
+                    {onHoldStatus ? "ON HOLD" : "ADD TO CART"}
+                  </button>
                 </div>
               </div>
-
-              {/* <button>Add to Cart</button> */}
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
       {renderPagination()}
+      {isModalOpen && (
+        <Modal
+          images={modalImages}
+          price={modalPrice}
+          brandModel={modalBrandModel}
+          measurement={modalMeasurement}
+          size={modalSizes}
+          onClose={closeModal}
+        />
+      )}
     </>
   );
 }

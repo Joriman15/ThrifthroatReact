@@ -3,7 +3,7 @@ function LoadingPage() {
     <>
       <div className="loading-container">
         <span className="loading"></span>
-        <p>Getting the shop ready...</p>
+        <p>Opening shop...</p>
       </div>
     </>
   );

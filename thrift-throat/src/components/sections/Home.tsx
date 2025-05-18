@@ -1,34 +1,73 @@
-// THIS IS FOR THE LANDING PAGE OR HOME PAGE
-
 import { useState } from "react";
 
 function Home() {
+  // Types for state
+  interface ModalState {
+    isOpen: boolean;
+    currentIndex: number;
+  }
+
+  // Define image interface
+  interface GalleryImage {
+    id: number;
+    src: string;
+    alt: string;
+  }
+
   // State for managing modal visibility and content
-  const [modalState, setModalState] = useState({
+  const [modalState, setModalState] = useState<ModalState>({
     isOpen: false,
-    currentImage: "",
-    currentCaption: "",
+    currentIndex: 0,
   });
 
+  // State for mobile carousel
+  const [mobileCarouselIndex, setMobileCarouselIndex] = useState<number>(0);
+
   // Function to open modal
-  const openModal = (src: any, alt: any) => {
+  const openModal = (index: number): void => {
     setModalState({
       isOpen: true,
-      currentImage: src,
-      currentCaption: alt,
+      currentIndex: index,
     });
   };
 
   // Function to close modal
-  const closeModal = () => {
+  const closeModal = (): void => {
     setModalState({
       ...modalState,
       isOpen: false,
     });
   };
 
+  // Modal navigation functions
+  const nextImage = (): void => {
+    setModalState((prev: ModalState) => ({
+      ...prev,
+      currentIndex: (prev.currentIndex + 1) % galleryImages.length,
+    }));
+  };
+
+  const prevImage = (): void => {
+    setModalState((prev: ModalState) => ({
+      ...prev,
+      currentIndex:
+        (prev.currentIndex - 1 + galleryImages.length) % galleryImages.length,
+    }));
+  };
+
+  // Mobile carousel navigation functions
+  const nextMobileImage = (): void => {
+    setMobileCarouselIndex((prev: number) => (prev + 1) % galleryImages.length);
+  };
+
+  const prevMobileImage = (): void => {
+    setMobileCarouselIndex(
+      (prev: number) => (prev - 1 + galleryImages.length) % galleryImages.length
+    );
+  };
+
   // Array of gallery images
-  const galleryImages = [
+  const galleryImages: GalleryImage[] = [
     {
       id: 1,
       src: "/images/caps.jpg",
@@ -55,6 +94,7 @@ function Home() {
       alt: "Each shirt has a past. Ready to be part of yours.",
     },
   ];
+
   return (
     <>
       <div className="main-section">
@@ -65,7 +105,7 @@ function Home() {
             sustainably yours.
           </h2>
 
-          <a href="#" className="btn">
+          <a href="/products" className="btn">
             Shop
           </a>
         </div>
@@ -88,32 +128,65 @@ function Home() {
         </div>
       </section>
 
-      <div className="gallery">
-        {galleryImages.map((image) => (
+      {/* Desktop Gallery View */}
+      <div className="desktop-gallery">
+        {galleryImages.map((image, index) => (
           <img
             id={`myImg${image.id}`}
             key={image.id}
             src={image.src}
             alt={image.alt}
-            onClick={() => openModal(image.src, image.alt)}
+            onClick={() => openModal(index)}
           />
         ))}
-
-        {/* Modal */}
-        {modalState.isOpen && (
-          <div id="myModal" className="modal">
-            <span className="close" onClick={closeModal}>
-              &times;
-            </span>
-            <img
-              className="modal-content"
-              src={modalState.currentImage}
-              alt="gallery item"
-            />
-            <div id="caption">{modalState.currentCaption}</div>
-          </div>
-        )}
       </div>
+
+      {/* Mobile Carousel View */}
+      <div className="mobile-gallery">
+        <div className="mobile-carousel">
+          <button className="carousel-nav left" onClick={prevMobileImage}>
+            &#10094;
+          </button>
+
+          <img
+            src={galleryImages[mobileCarouselIndex].src}
+            alt={galleryImages[mobileCarouselIndex].alt}
+            onClick={() => openModal(mobileCarouselIndex)}
+          />
+
+          <button className="carousel-nav right" onClick={nextMobileImage}>
+            &#10095;
+          </button>
+        </div>
+        <div className="carousel-caption">
+          {galleryImages[mobileCarouselIndex].alt}
+        </div>
+      </div>
+
+      {/* Modal */}
+      {modalState.isOpen && (
+        <div id="myModal" className="modal">
+          <span className="close" onClick={closeModal}>
+            &times;
+          </span>
+
+          <button className="modal-nav left" onClick={prevImage}>
+            &#10094;
+          </button>
+
+          <img
+            className="modal-content-home"
+            src={galleryImages[modalState.currentIndex].src}
+            alt={galleryImages[modalState.currentIndex].alt}
+          />
+
+          <div id="caption">{galleryImages[modalState.currentIndex].alt}</div>
+
+          <button className="modal-nav right" onClick={nextImage}>
+            &#10095;
+          </button>
+        </div>
+      )}
     </>
   );
 }

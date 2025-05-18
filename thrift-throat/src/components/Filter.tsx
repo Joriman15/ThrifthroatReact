@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-
 function Filter() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -15,6 +14,7 @@ function Filter() {
     { id: 2, name: "jacket" },
     { id: 3, name: "pants" },
     { id: 4, name: "shirt" },
+    { id: 5, name: "long sleeve" },
   ];
 
   useEffect(() => {
@@ -22,7 +22,6 @@ function Filter() {
     const orderParam = queryParams.get("sort");
     const categoryParams = queryParams.getAll("category");
 
-   
     setCurrentOrder(orderParam ?? "ascending");
     setSelectedCategories(categoryParams);
   }, [location.search]);
