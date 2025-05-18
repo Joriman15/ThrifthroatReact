@@ -55,9 +55,9 @@ const Modal: React.FC<ModalProps> = ({
           </div>
           <div className="modal-description">
             <h3>Price:</h3> <p>{price || "No price available"}</p>
-            <h3>Brand/Model</h3>{" "}
+            <h3>Brand/Model:</h3>{" "}
             <p>{brandModel || "No brand/model available"}</p>
-            <h3>measurement</h3>{" "}
+            <h3>Measurement:</h3>{" "}
             <p>{measurement || "No measurement available"}</p>
             <h3>Size:</h3>
             <p>{size || "No size available"}</p>

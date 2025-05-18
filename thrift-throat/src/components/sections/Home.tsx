@@ -6,20 +6,20 @@ function Home() {
     isOpen: boolean;
     currentIndex: number;
   }
-  
+
   // Define image interface
   interface GalleryImage {
     id: number;
     src: string;
     alt: string;
   }
-  
+
   // State for managing modal visibility and content
   const [modalState, setModalState] = useState<ModalState>({
     isOpen: false,
     currentIndex: 0,
   });
-  
+
   // State for mobile carousel
   const [mobileCarouselIndex, setMobileCarouselIndex] = useState<number>(0);
 
@@ -38,7 +38,7 @@ function Home() {
       isOpen: false,
     });
   };
-  
+
   // Modal navigation functions
   const nextImage = (): void => {
     setModalState((prev: ModalState) => ({
@@ -46,7 +46,7 @@ function Home() {
       currentIndex: (prev.currentIndex + 1) % galleryImages.length,
     }));
   };
-  
+
   const prevImage = (): void => {
     setModalState((prev: ModalState) => ({
       ...prev,
@@ -54,17 +54,15 @@ function Home() {
         (prev.currentIndex - 1 + galleryImages.length) % galleryImages.length,
     }));
   };
-  
+
   // Mobile carousel navigation functions
   const nextMobileImage = (): void => {
-    setMobileCarouselIndex((prev: number) => 
-      (prev + 1) % galleryImages.length
-    );
+    setMobileCarouselIndex((prev: number) => (prev + 1) % galleryImages.length);
   };
-  
+
   const prevMobileImage = (): void => {
-    setMobileCarouselIndex((prev: number) => 
-      (prev - 1 + galleryImages.length) % galleryImages.length
+    setMobileCarouselIndex(
+      (prev: number) => (prev - 1 + galleryImages.length) % galleryImages.length
     );
   };
 
@@ -96,7 +94,7 @@ function Home() {
       alt: "Each shirt has a past. Ready to be part of yours.",
     },
   ];
-  
+
   return (
     <>
       <div className="main-section">
@@ -107,7 +105,7 @@ function Home() {
             sustainably yours.
           </h2>
 
-          <a href="#" className="btn">
+          <a href="/products" className="btn">
             Shop
           </a>
         </div>
@@ -142,20 +140,20 @@ function Home() {
           />
         ))}
       </div>
-      
+
       {/* Mobile Carousel View */}
       <div className="mobile-gallery">
         <div className="mobile-carousel">
           <button className="carousel-nav left" onClick={prevMobileImage}>
             &#10094;
           </button>
-          
+
           <img
             src={galleryImages[mobileCarouselIndex].src}
             alt={galleryImages[mobileCarouselIndex].alt}
             onClick={() => openModal(mobileCarouselIndex)}
           />
-          
+
           <button className="carousel-nav right" onClick={nextMobileImage}>
             &#10095;
           </button>
@@ -181,9 +179,9 @@ function Home() {
             src={galleryImages[modalState.currentIndex].src}
             alt={galleryImages[modalState.currentIndex].alt}
           />
-          
+
           <div id="caption">{galleryImages[modalState.currentIndex].alt}</div>
-          
+
           <button className="modal-nav right" onClick={nextImage}>
             &#10095;
           </button>

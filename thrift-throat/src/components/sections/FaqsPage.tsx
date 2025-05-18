@@ -22,12 +22,13 @@ function FaqsPage() {
       q: "HOW TO ORDER?",
       a: (
         <>
-          Step&nbsp;1. You will need to fill‑up the order form{" "}
-          <a href="Order-Contact.html">here</a>.<br />
-          Step&nbsp;2. Be patient. We will respond to you A.S.A.P.
+          Step&nbsp;1. Add items on your cart.
           <br />
-          Step&nbsp;3. Be ready to send a screenshot of the receipt. Once
-          confirmed, we will send the item as soon as we can!
+          Step&nbsp;2. Fill‑up the order form on checkout.
+          <br />
+          Step&nbsp;3. Be ready to send a screenshot of your payment on{" "}
+          <strong>sales@thrifthroat.com</strong>. Once confirmed, we will send
+          the item(s) as soon as we can!
         </>
       ),
     },
@@ -37,7 +38,7 @@ function FaqsPage() {
     },
     {
       q: "MINE? BIDDING? EARLY DIBS?",
-      a: "‑ All products here are items that are beyond the bidding time and early dibs. Bidding and early dibs are concurrent on our instagram",
+      a: "‑ All products here are items that are beyond the bidding time and early dibs. Bidding and early dibs are concurrent on our Instagram.",
     },
   ];
 

@@ -13,16 +13,15 @@ function PaymentPage() {
         <p className="confirmTitle">Thank you! Your order is confirmed!</p>
         <p className="paymentEmail">
           <strong> *Important* </strong>
-          E-mail us a photo/screenshot at <strong>
-            sales@thrifthroat.com
-          </strong>{" "}
-          within 24 HOURS for us to proceed with the shipment of your order.
-          {totalPrice}
+          Kindly check your email and send us a photo/screenshot at{" "}
+          <strong>sales@thrifthroat.com</strong> within 24 HOURS for us to
+          proceed with the shipment of your order.
         </p>
         <div className="paymentDetails">
           <p className="paymentLabel">PAYMENT DETAILS:</p>
           <Gcash />
         </div>
+        {totalPrice}
       </div>
     </>
   );
