@@ -77,7 +77,6 @@ function Filter() {
         <h3 className="filterTitle">Filter</h3>
 
         <div className="sortFilterContainer">
-          <h4 className="priceFilterTitle">Price</h4>
           <div className="buttonContainer">
             <button
               className={`sortFilterButton ${
