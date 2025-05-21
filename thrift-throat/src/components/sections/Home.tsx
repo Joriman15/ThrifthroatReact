@@ -114,7 +114,7 @@ function Home() {
         <div className="abt-subsection">
           <h2 className="abt-title">About Thrifthroat</h2>
           <div className="logo">
-            <img src="/images/logo.jpg" width="50px" />
+            <img src="/images/logo.jpg" width="50px" alt="Thrifthroat logo" />
           </div>
         </div>
 
