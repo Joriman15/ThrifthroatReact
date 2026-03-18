@@ -12,7 +12,7 @@ function FaqsPage() {
   const faqs: FAQ[] = [
     {
       q: "WHERE IS YOUR SHOP LOCATED? WHERE ARE YOU MAINLY LOCATED?",
-      a: "‑ We currently do not have a shop. We are mainly located in Laguna.",
+      a: "‑ We currently do not have a shop. We are mainly located in *insert place*.",
     },
     {
       q: "WHEN IS MY ORDER GETTING SHIPPED?",
